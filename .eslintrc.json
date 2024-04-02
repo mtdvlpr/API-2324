@@ -10,7 +10,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "semi": ["warn", "always"],
+    "semi": ["warn", "never"],
     "quotes": ["warn", "single"],
     "space-before-function-paren": ["warn", "always"],
     "no-console": "off",

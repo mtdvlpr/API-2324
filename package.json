@@ -4,19 +4,31 @@
   "description": "In dit vier weken durende vak zullen we de kracht van het web ervaren en kijken hoe we (mobiele) web apps kunnen maken die\nnet zo aantrekkelijk zijn als native mobiele apps.",
   "type": "module",
   "scripts": {
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:server": "SET \"NODE_ENV=development\" && nodemon",
+    "dev:client": "vite --config vite.config.ts",
+    "build": "npm-run-all build:*",
+    "build:client": "vite build",
+    "start": "tsm src/index.ts",
     "lint": "eslint . --ext .js,.liquid"
   },
   "license": "MIT",
   "dependencies": {
     "@tinyhttp/app": "^2.2.3",
     "@tinyhttp/logger": "^2.0.0",
+    "liquidjs": "^10.10.2",
+    "sirv": "^2.0.4",
+    "tsm": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.2",
+    "@vitejs/plugin-legacy": "^5.3.2",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
-    "liquidjs": "^10.10.2",
     "nodemon": "^3.1.0",
     "npm-run-all": "^4.1.5",
-    "sirv": "^2.0.4",
-    "vite": "^5.2.6",
+    "sass": "^1.72.0",
+    "vite": "^5.2.7",
     "vite-plugin-eslint": "^1.8.1"
   }
 }
