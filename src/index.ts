@@ -21,11 +21,9 @@ const engine = new Liquid({
 
 const renderTemplate = (template: string, data: any) => {
   const templateData = {
-    NODE_ENV: process.env.NODE_ENV || 'production',
     ...data,
+    isDev: !isProduction,
   }
-
-  console.log('env', process.env.NODE_ENV)
 
   if (isProduction) {
     templateData['manifest'] = JSON.parse(
@@ -36,8 +34,6 @@ const renderTemplate = (template: string, data: any) => {
     )
   }
 
-  console.log('data', templateData)
-
   return engine.renderFileSync(template, templateData)
 }
 
@@ -46,3 +42,5 @@ app.get('/', (_, res) => {
 })
 
 app.listen(3000, () => console.log('Server started on http://localhost:3000'))
+
+module.exports = app
