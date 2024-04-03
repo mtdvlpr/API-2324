@@ -10,7 +10,7 @@
     "build": "npm-run-all build:*",
     "build:client": "vite build",
     "start": "tsm src/index.ts",
-    "lint": "eslint . --ext .js,.liquid"
+    "lint": "eslint . --ext .js,.ts,.liquid"
   },
   "license": "MIT",
   "dependencies": {
