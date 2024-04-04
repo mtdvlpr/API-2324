@@ -18,6 +18,10 @@
 </head>
 
 <body>
-  {% block content %}{% endblock %}
+  {% render 'components/header/header.liquid' %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  {% render 'components/footer/footer.liquid' %}
 </body>
 </html>

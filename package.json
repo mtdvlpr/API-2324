@@ -17,6 +17,7 @@
     "@tinyhttp/app": "^2.2.3",
     "@tinyhttp/logger": "^2.0.0",
     "liquidjs": "^10.10.2",
+    "node-fetch": "^3.3.2",
     "sirv": "^2.0.4",
     "tsm": "^2.3.0"
   },
