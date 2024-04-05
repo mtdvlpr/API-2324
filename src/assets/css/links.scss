@@ -1,0 +1,10 @@
+/* Links */
+a {
+  font-weight: 500;
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
