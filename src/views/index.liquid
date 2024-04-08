@@ -1,4 +1,11 @@
 {% layout "layouts/base" %}
 {% block content %}
-Hello from {{name}}
+<section>
+  <h1>Popular movies</h1>
+  <div class="auto-grid">
+    {% for movie in movies %}
+    {% render 'components/movie/movie.liquid', movie: movie %}
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}

@@ -1,0 +1,9 @@
+sl-card.movie-card {
+  max-width: 300px;
+
+  [slot='footer'] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

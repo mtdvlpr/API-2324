@@ -4,9 +4,19 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll.markdownlint": "explicit"
   },
+  "html.customData": ["./node_modules/mdui/html-data.en.json"],
+  "css.customData": ["./node_modules/mdui/css-data.en.json"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.ignoreWords": ["transform"],
   "cSpell.ignorePaths": [],
   "cSpell.enabled": true,
-  "cSpell.words": ["Avenir", "ecma", "liquidjs", "sirv", "tinyhttp", "TMDB"]
+  "cSpell.words": [
+    "Avenir",
+    "ecma",
+    "liquidjs",
+    "mdui",
+    "sirv",
+    "tinyhttp",
+    "TMDB"
+  ]
 }

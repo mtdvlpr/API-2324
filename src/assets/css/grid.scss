@@ -1,0 +1,47 @@
+/**
+ * AUTO-GRID LAYOUT
+ *
+ * This CSS utility creates a responsive grid layout that automatically adjusts the number of columns
+ * based on the available space and specified constraints. It aims to fit as many cells as possible
+ * in a single row, while respecting minimum cell width and maximum columns constraints.
+ *
+ * Customizable Properties:
+ * --auto-grid-min-size: Sets the minimum width for each cell in the grid.
+ *                       Default is 10rem.
+ * --auto-grid-max-columns: Sets the maximum number of columns in the grid.
+ *                          Default is 'infinity' (as many as can fit).
+ * --auto-grid-gap: Sets the horizontal gap between grid cells. It also sets
+ *                  the vertical gap if --auto-grid-gap-vertical is not defined.
+ *                  Default is 1rem.
+ * --auto-grid-gap-vertical: Specifically sets the vertical gap between rows
+ *                           of cells. If not set, it falls back to the value
+ *                           of '--auto-grid-gap'.
+ *
+ * The grid utilizes CSS 'display: grid' with the 'auto-fit' feature and the 'minmax()'
+ * function to ensure that cells expand to fill available space while maintaining
+ * the set minimum size.
+ *
+ * Example Usage:
+ * <div class="auto-grid" style="--auto-grid-min-size: 10rem; --auto-grid-max-columns: 3; --auto-grid-gap: 0.5rem;">
+ *   <!-- grid items here -->
+ * </div>
+ *
+ * The above example will create a grid with a minimum cell width of 10rem, a maximum
+ * of 3 columns, and a gap of 0.5rem between both rows and columns.
+ */
+
+.auto-grid {
+  --gap: var(--auto-grid-gap, 1rem);
+  --max-column-width: 100% / var(--auto-grid-max-columns, infinity) - var(--gap);
+  --column-width: max(
+    var(--max-column-width),
+    min(var(--auto-grid-min-size, 10rem), 100%)
+  );
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(var(--column-width), 1fr));
+
+  /* vertical gap falls back to general gap then falls back to 1rem*/
+  gap: var(--auto-grid-gap-vertical, var(--gap)) var(--gap);
+}

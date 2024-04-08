@@ -1,0 +1,15 @@
+  <sl-card class="movie-card">
+  <img
+    slot="image"
+    src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}"
+    alt="A poster for the movie {{ movie.title }}"
+  />
+  <div>
+    <strong>{{movie.title}}</strong>
+  <sl-rating label="Rating" readonly precision="0.5" value="2.5" max="5"></sl-rating>
+  </div>
+  <div slot="footer">
+    <sl-button variant="primary" pill href="/movie/{{ movie.id }}">More Info</sl-button>
+    <sl-icon-button name="share" label="Share" data-share='{{movie | json}}'></sl-icon-button>
+  </div>
+</sl-card>
