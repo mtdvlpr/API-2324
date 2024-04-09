@@ -1,5 +1,10 @@
-export const initPWA = () => {
+export const initPWA = async () => {
   if (navigator.serviceWorker && window.location.hostname !== 'localhost') {
-    navigator.serviceWorker.register('/sw.js')
+    try {
+      const worker = await navigator.serviceWorker.register('/sw.js')
+      worker.update()
+    } catch (e) {
+      console.error('Service Worker registration failed', e)
+    }
   }
 }

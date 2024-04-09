@@ -52,5 +52,13 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [
+    {
+      "src": "/img/screenshot.png",
+      "sizes": "3840x2160",
+      "type": "image/png",
+      "description": "A screenshot of the home page"
+    }
+  ],
   "prefer_related_applications": false
 }
