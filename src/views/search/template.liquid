@@ -1,6 +1,6 @@
 {% layout "base" %}
 {% block content %}
-{% render 'search' %}
+{% render 'search', query: query %}
 <section>
   <h1>Search results ({{movies.size}})</h1>
   <div class="auto-grid">
