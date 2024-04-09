@@ -26,13 +26,19 @@
 
   .movie__info {
     display: flex;
-    max-width: 400px;
+    align-items: center;
     flex-direction: column;
     padding: 20px;
     margin-top: 80px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+
+    iframe {
+      aspect-ratio: 16 / 9;
+      width: 560px;
+      max-width: 80%;
+    }
   }
 
   .movie__info-image {

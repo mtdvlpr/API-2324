@@ -24,7 +24,11 @@ app.get('/', async (_, res) => {
 
 app.get('/movie/:id/', async (req, res) => {
   const movieID = req.params.id
-  const movie = await tmdbAPI(`movie/${movieID}`)
+  const movie = await tmdbAPI(`movie/${movieID}`, 'append_to_response=videos')
+  movie.trailer =
+    movie?.videos?.results?.find((v: any) => {
+      return v.type === 'Trailer' && v.site === 'YouTube' && v.official
+    }) || null
   return renderView(res, 'detail', { title: movie.title, movie })
 })
 
