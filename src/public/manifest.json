@@ -48,10 +48,20 @@
   ],
   "screenshots": [
     {
-      "src": "/img/screenshot.png",
+      "src": "/img/screenshots/desktop.png",
       "sizes": "3840x2160",
       "type": "image/png",
-      "description": "A screenshot of the home page"
+      "form_factor": "wide",
+      "platform": "windows",
+      "label": "A screenshot of the homepage on desktop"
+    },
+    {
+      "src": "/img/screenshots/mobile.png",
+      "sizes": "1442x3202",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "platform": "android",
+      "label": "A screenshot of the homepage on mobile"
     }
   ],
   "display_override": ["window-controls-overlay"],
