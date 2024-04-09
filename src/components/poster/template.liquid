@@ -1,14 +1,14 @@
   <sl-card class="movie-card">
   <img
     slot="image"
-    src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}"
+    src="{{tmdbAssetUrl}}/original{{ movie.poster_path }}"
     srcset="
-      https://image.tmdb.org/t/p/w92{{ movie.poster_path }} 92w,
-      https://image.tmdb.org/t/p/w154{{ movie.poster_path }} 154w,
-      https://image.tmdb.org/t/p/w185{{ movie.poster_path }} 185w,
-      https://image.tmdb.org/t/p/w342{{ movie.poster_path }} 342w,
-      https://image.tmdb.org/t/p/w500{{ movie.poster_path }} 500w,
-      https://image.tmdb.org/t/p/w780{{ movie.poster_path }} 780w
+      {{tmdbAssetUrl}}/w92{{ movie.poster_path }} 92w,
+      {{tmdbAssetUrl}}/w154{{ movie.poster_path }} 154w,
+      {{tmdbAssetUrl}}/w185{{ movie.poster_path }} 185w,
+      {{tmdbAssetUrl}}/w342{{ movie.poster_path }} 342w,
+      {{tmdbAssetUrl}}/w500{{ movie.poster_path }} 500w,
+      {{tmdbAssetUrl}}/w780{{ movie.poster_path }} 780w
     "
     sizes="
       (max-width: 92px) 92px,
@@ -23,8 +23,8 @@
     <strong>{{movie.title}}</strong>
   <sl-rating label="Rating" readonly precision="0.5" value="2.5" max="5"></sl-rating>
   </div>
-  <div slot="footer">
-    <sl-button variant="primary" pill href="/movie/{{ movie.id }}">More Info</sl-button>
+  <div slot="footer" class="no-share">
+    <sl-button variant="primary" href="/movie/{{ movie.id }}">More Info</sl-button>
     <sl-icon-button name="share" label="Share" data-share='{{movie | json | escape}}'></sl-icon-button>
   </div>
 </sl-card>

@@ -1,0 +1,24 @@
+nav.main-navigation {
+  display: flex;
+  justify-content: space-between;
+  background-color: lightskyblue;
+  align-items: center;
+  padding-right: 1rem;
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    > a {
+      height: 56px;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+
+  li {
+    display: inline-block;
+  }
+}

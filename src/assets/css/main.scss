@@ -4,10 +4,19 @@
 @import 'links.scss';
 @import 'grid.scss';
 
+/* Layout styles */
+@import '@/layouts/base/styles.scss';
+
+/* View styles */
+@import '@/views/home/styles.scss';
+@import '@/views/detail/styles.scss';
+
 /* Component styles */
-@import './../../components/navbar/navbar.scss';
-@import './../../components/footer/footer.scss';
-@import './../../components/movie/movie.scss';
+@import '@/components/footer/styles.scss';
+@import '@/components/header/styles.scss';
+@import '@/components/navbar/styles.scss';
+@import '@/components/poster/styles.scss';
+@import '@/components/search/styles.scss';
 
 /* Main styles */
 :root {

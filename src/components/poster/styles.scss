@@ -1,0 +1,27 @@
+sl-card.movie-card {
+  max-width: 300px;
+
+  &::part(base) {
+    height: 100%;
+  }
+
+  &::part(body) {
+    flex-grow: 1;
+  }
+
+  [slot='footer'] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &.no-share {
+      sl-button {
+        width: 100%;
+      }
+
+      sl-icon-button {
+        display: none;
+      }
+    }
+  }
+}

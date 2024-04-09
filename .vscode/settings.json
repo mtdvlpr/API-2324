@@ -15,8 +15,10 @@
     "ecma",
     "liquidjs",
     "mdui",
+    "MOVIEDB",
     "sirv",
     "tinyhttp",
+    "tmdb",
     "TMDB"
   ]
 }

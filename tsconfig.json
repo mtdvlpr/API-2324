@@ -3,6 +3,11 @@
     "target": "ESNext",
     "module": "ESNext",
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@styles/*": ["src/assets/css/*"]
+    }
   }
 }

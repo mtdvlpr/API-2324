@@ -1,0 +1,7 @@
+.search-form {
+  sl-input {
+    [slot='suffix'] {
+      display: none;
+    }
+  }
+}

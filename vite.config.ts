@@ -10,6 +10,12 @@ export default defineConfig({
     eslint({ exclude: ['**/node_modules/**', '**/dist/**', '**/*.min.*'] }),
     legacy(),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@styles': path.resolve(__dirname, 'src/assets/css'),
+    },
+  },
   build: {
     minify: false,
     manifest: true,

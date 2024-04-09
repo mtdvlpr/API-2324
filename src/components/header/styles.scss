@@ -1,0 +1,10 @@
+header.header {
+  display: flex;
+  justify-content: center;
+  height: 150px;
+
+  a,
+  img {
+    height: 100%;
+  }
+}

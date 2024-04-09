@@ -1,10 +1,11 @@
-{% layout "layouts/base" %}
+{% layout "base" %}
 {% block content %}
+{% render 'search' %}
 <section>
-  <h1>Popular movies</h1>
+  <h1>Popular</h1>
   <div class="auto-grid">
     {% for movie in movies %}
-    {% render 'components/movie/movie.liquid', movie: movie %}
+    {% render 'poster', movie: movie %}
     {% endfor %}
   </div>
 </section>
