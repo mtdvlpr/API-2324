@@ -1,19 +1,40 @@
-import fetch from 'node-fetch'
+import _fetch, { RequestInit } from 'node-fetch'
+import { normalizeURL } from './general'
 
-export const tmdbAPI = async <T = any>(
+/**
+ * Fetches a URL with query parameters
+ * @param url The URL
+ * @param params The query parameters
+ * @param options The fetch options
+ * @returns The response
+ */
+const fetch = async (
   url: string,
-  query?: string
-): Promise<T | null> => {
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/${url}?api_key=${
-        process.env.MOVIEDB_TOKEN
-      }${query ? `&${query}` : ''}`
-    )
-    const result = (await response.json()) as T
-    return result
-  } catch (e) {
-    console.error(e)
-    return null
-  }
+  params: Record<string, any> = {},
+  options?: RequestInit
+) => {
+  const query = new URLSearchParams(params).toString()
+  return _fetch(`${url}?${query}`, options)
+}
+
+/**
+ * Fetches a JSON response
+ * @param base The base URL
+ * @param url The relative URL
+ * @param params The query parameters
+ * @param options The fetch options
+ * @returns The JSON response
+ */
+export const fetchJSON = async <T = unknown>(
+  base: string,
+  url: string,
+  params: Record<string, any> = {},
+  options?: RequestInit
+) => {
+  const response = await fetch(
+    `${normalizeURL(base)}${url.replace(/\/+/g, '/')}`,
+    params,
+    options
+  )
+  return (await response.json()) as T
 }

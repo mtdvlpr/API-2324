@@ -5,7 +5,7 @@ import sirv from 'sirv'
 
 import { getAbsolutePath, isProduction } from './utils/general'
 import { renderView } from './utils/renderer'
-import { tmdbAPI } from './utils/api'
+import { getMovie, getPopularMovies, searchMovies } from './utils/tmdb'
 
 const app = new App()
 app.use(logger())
@@ -17,18 +17,14 @@ if (isProduction) {
 }
 
 app.get('/', async (_, res) => {
-  const result = await tmdbAPI<{ results: any[] }>('movie/popular')
+  const result = await getPopularMovies()
   const movies = result?.results || []
   return renderView(res, 'home', { title: 'Home', movies })
 })
 
 app.get('/movie/:id/', async (req, res) => {
-  const movieID = req.params.id
-  const movie = await tmdbAPI(`movie/${movieID}`, 'append_to_response=videos')
-  movie.trailer =
-    movie?.videos?.results?.find((v: any) => {
-      return v.type === 'Trailer' && v.site === 'YouTube' && v.official
-    }) || null
+  const movieID = parseInt(req.params.id)
+  const movie = await getMovie(movieID, true)
   return renderView(res, 'detail', { title: movie.title, movie })
 })
 
@@ -37,9 +33,9 @@ app.get('/search', async (req, res) => {
   if (!query) {
     return renderView(res, 'search', { title: 'Zoeken', query, movies: [] })
   }
-  const result = await tmdbAPI<{ results: any[] }>(
-    'search/movie',
-    `query=${query}`
+
+  const result = await searchMovies(
+    Array.isArray(query) ? query.join(' ') : query
   )
   const movies = result?.results || []
   return renderView(res, 'search', { title: 'Zoeken', query, movies })

@@ -5,3 +5,6 @@ export const isProduction =
 
 export const getAbsolutePath = (...path: string[]) =>
   join(process.cwd(), ...path)
+
+export const normalizeURL = (url: string) =>
+  url.endsWith('/') ? url : `${url}/`
