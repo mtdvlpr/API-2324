@@ -86,4 +86,8 @@ export interface Movie extends MovieBase {
   videos?: MovieVideosResponse
 }
 
+export interface MovieMapped {
+  rating: number
+}
+
 export interface MovieListResponse extends PagedResponse<MovieBase> {}

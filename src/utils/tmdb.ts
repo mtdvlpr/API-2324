@@ -1,6 +1,6 @@
 import { RequestInit } from 'node-fetch'
 import { fetchJSON } from './api'
-import { Movie, MovieListResponse } from '@/types/tmdb'
+import { Movie, MovieBase, MovieListResponse, MovieMapped } from '@/types/tmdb'
 
 /**
  * Fetches data from the TMDB API
@@ -27,27 +27,36 @@ const fetch = async <T = unknown>(
   }
 }
 
-export const getPopularMovies = async (): Promise<MovieListResponse | null> => {
-  return fetch('movie/popular')
+const mapMovie = <T extends MovieBase>(movie: T): T & MovieMapped => {
+  return { ...movie, rating: movie.vote_average / 2 }
 }
 
-export const getMovie = async (
-  id: number,
-  withTrailer?: boolean
-): Promise<Movie | null> => {
+export const getPopularMovies = async () => {
+  const result = await fetch<MovieListResponse>('movie/popular')
+  if (!result) return { results: [] }
+  return {
+    ...result,
+    results: result.results.map(mapMovie),
+  }
+}
+
+export const getMovie = async (id: number, withTrailer?: boolean) => {
   const query = withTrailer ? { append_to_response: 'videos' } : {}
   const movie = await fetch<Movie>(`movie/${id}`, query)
   if (withTrailer && movie && !movie.video) {
     movie.video =
-      movie?.videos?.results?.find((v: any) => {
+      movie?.videos?.results?.find((v) => {
         return v.type === 'Trailer' && v.site === 'YouTube' && v.official
       }) || false
   }
-  return movie
+  return movie ? mapMovie(movie) : null
 }
 
-export const searchMovies = async (
-  query: string
-): Promise<MovieListResponse | null> => {
-  return fetch('search/movie', { query })
+export const searchMovies = async (query: string) => {
+  const result = await fetch<MovieListResponse>('search/movie', { query })
+  if (!result) return { results: [] }
+  return {
+    ...result,
+    results: result.results.map(mapMovie),
+  }
 }

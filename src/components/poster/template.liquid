@@ -21,7 +21,7 @@
   />
   <div>
     <strong>{{movie.title}}</strong>
-  <sl-rating label="Rating" readonly precision="0.5" value="2.5" max="5"></sl-rating>
+  <sl-rating label="Rating" readonly precision="0.001" value="{{movie.rating}}" max="5"></sl-rating>
   </div>
   <div slot="footer" class="no-share">
     <sl-button variant="primary" href="/movie/{{ movie.id }}">More Info</sl-button>
