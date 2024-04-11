@@ -18,7 +18,7 @@ const engine = new Liquid({
 export const renderView = (
   res: Response<unknown>,
   template: string,
-  data: Record<string, any>
+  data: { title: string } & Record<string, any>
 ) => {
   const templateData = {
     ...data,

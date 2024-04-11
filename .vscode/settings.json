@@ -15,6 +15,7 @@
     "ecma",
     "liquidjs",
     "mdui",
+    "milliparsec",
     "MOVIEDB",
     "sirv",
     "tinyhttp",

@@ -2,13 +2,18 @@ import 'dotenv/config'
 import { App } from '@tinyhttp/app'
 import { logger } from '@tinyhttp/logger'
 import sirv from 'sirv'
+import parser from 'body-parser'
 
 import { getAbsolutePath, isProduction } from './utils/general'
 import { renderView } from './utils/renderer'
 import { getMovie, getPopularMovies, searchMovies } from './utils/tmdb'
+import { getMessages, listenForMessages, saveMessage } from './utils/chat'
 
 const app = new App()
-app.use(logger())
+app
+  .use(logger())
+  .use(parser.json())
+  .use(parser.urlencoded({ extended: false }))
 
 app.use('/', sirv(getAbsolutePath('src', 'public')))
 
@@ -39,6 +44,34 @@ app.get('/search', async (req, res) => {
   )
   const movies = result?.results || []
   return renderView(res, 'search', { title: 'Zoeken', query, movies })
+})
+
+app.get('/chat', (_, res) => {
+  return renderView(res, 'chat', { title: 'Chat' })
+})
+
+app.post('/chat', async (req, res) => {
+  const { name, message } = req.body
+  if (name && message) {
+    await saveMessage(name, message)
+  }
+  res.redirect('/chat')
+})
+
+app.get('/events', async (_, res) => {
+  res.set({
+    'Cache-Control': 'no-cache',
+    'Content-Type': 'text/event-stream',
+    Connection: 'keep-alive',
+  })
+  res.flushHeaders()
+
+  res.write('retry: 10000\n\n')
+  const messages = await getMessages()
+  res.write(`data: ${JSON.stringify(messages)}\n\n`)
+  listenForMessages((messages) => {
+    res.write(`data: ${JSON.stringify(messages)}\n\n`)
+  })
 })
 
 app.listen(3000, () => console.log('Listening on http://localhost:3000'))
