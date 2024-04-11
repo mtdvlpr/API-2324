@@ -1,15 +1,26 @@
 export const initChat = () => {
-  const list = document.querySelector('[data-events]')
-
   /**
    * @type {HTMLFormElement}
    */
   const chatForm = document.getElementById('chat-form')
+  const list = document.querySelector('[data-events]')
 
   if (!chatForm || !list) return
 
-  const source = new EventSource('/events')
+  const drawer = document.querySelector('sl-drawer[label="Chatroom"]')
+  const openBtn = document.querySelector('sl-icon-button[name="chat"]')
 
+  if (!drawer || !openBtn) return
+  openBtn.parentElement.classList.toggle('no-chat', false)
+  openBtn.parentElement.insertBefore(
+    document.createElement('div'),
+    openBtn.parentElement.firstChild
+  )
+  openBtn.addEventListener('click', () => {
+    drawer.show()
+  })
+
+  const source = new EventSource('/events')
   source.addEventListener('message', (e) => {
     const messages = JSON.parse(e.data)
     if (list) {
