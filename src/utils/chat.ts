@@ -35,7 +35,7 @@ export const saveMessage = async (name: string, message: string) => {
 export const getMessages = async () => {
   try {
     await connect()
-    const messages = await Message.find().sort({ timestamp: -1 }).limit(10)
+    const messages = await Message.find().sort({ timestamp: -1 })
     return messages.sort(
       (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
     )
@@ -52,7 +52,6 @@ export const listenForMessages = async (
     await connect()
     const changeStream = Message.watch()
     changeStream.on('change', async () => {
-      console.log('change detected')
       const messages = await getMessages()
       callback(messages)
     })

@@ -31,6 +31,7 @@ const initDrawer = (drawer, openBtn) => {
   openBtn.addEventListener('click', () => {
     drawer.show()
     nrOfReadMessages = list.children.length
+    setUnreadMessages(notifyBadge, 0)
   })
 }
 
@@ -42,10 +43,7 @@ const initListener = (list) => {
   const source = new EventSource('/events')
   source.addEventListener('message', (e) => {
     const messages = JSON.parse(e.data)
-    const nrOfMessages = messages.length
-    if (nrOfMessages > nrOfReadMessages) {
-      setUnreadMessages(notifyBadge, nrOfMessages - nrOfReadMessages)
-    }
+    setUnreadMessages(notifyBadge, messages.length - nrOfReadMessages)
     fillChat(list, messages)
   })
 }
@@ -56,11 +54,6 @@ const initListener = (list) => {
  * @param {{name: string;timestamp: string;message:string}[]} messages The chat messages
  */
 const fillChat = (list, messages) => {
-  console.log('fillChat', messages)
-  const nrOfMessages = messages.length
-  if (nrOfMessages > nrOfReadMessages) {
-    setUnreadMessages(notifyBadge, nrOfMessages - nrOfReadMessages)
-  }
   if (list) {
     list.innerHTML = ''
     messages.forEach((message) => {
@@ -80,7 +73,7 @@ const fillChat = (list, messages) => {
  */
 const setUnreadMessages = (badge, nrOfUnreadMessages) => {
   badge.textContent = nrOfUnreadMessages
-  badge.style.display = nrOfReadMessages ? 'block' : 'none'
+  badge.style.display = nrOfUnreadMessages ? 'block' : 'none'
 }
 
 /**
