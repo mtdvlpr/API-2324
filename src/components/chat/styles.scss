@@ -1,0 +1,15 @@
+.chat-drawer {
+  *::part(form-control-label) {
+    float: left;
+  }
+
+  ul > li {
+    padding: 0.5rem 0;
+    white-space: pre-wrap;
+  }
+
+  sl-input,
+  sl-textarea {
+    margin-bottom: 1rem;
+  }
+}

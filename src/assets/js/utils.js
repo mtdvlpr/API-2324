@@ -1,0 +1,32 @@
+export const formatDate = (timestamp) => {
+  const date = new Date(timestamp)
+  if (new Date().toDateString() === date.toDateString()) {
+    return formatTimeAgo(date)
+  } else {
+    return Intl.DateTimeFormat('nl-NL', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    }).format(new Date(timestamp))
+  }
+}
+
+/**
+ *
+ * @param {Date} date Date
+ */
+export const formatTimeAgo = (date) => {
+  const diff = date.getTime() - new Date().getTime()
+  const seconds = Math.round(diff / 1000)
+  const minutes = Math.round(diff / 1000 / 60)
+  const hours = Math.round(diff / 1000 / 60 / 60)
+  let output = [seconds, 'seconds']
+  if (minutes <= -1) {
+    output = [minutes, 'minutes']
+  }
+  if (hours <= -1) {
+    output = [hours, 'hours']
+  }
+  return new Intl.RelativeTimeFormat('en-US', {
+    numeric: 'auto',
+  }).format(output[0], output[1])
+}

@@ -8,7 +8,7 @@ header.header {
   &.no-chat {
     justify-content: center;
 
-    sl-icon-button {
+    .chat-btn {
       display: none;
     }
   }
@@ -18,7 +18,16 @@ header.header {
     height: 100%;
   }
 
-  sl-icon-button {
-    font-size: 2.5rem;
+  .chat-btn {
+    display: flex;
+    align-items: center;
+
+    sl-icon-button {
+      font-size: var(--sl-font-size-large);
+    }
+
+    .new-chats {
+      display: none;
+    }
   }
 }

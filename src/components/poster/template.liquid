@@ -8,15 +8,10 @@
       {{tmdbAssetUrl}}/w185{{ movie.poster_path }} 185w,
       {{tmdbAssetUrl}}/w342{{ movie.poster_path }} 342w,
       {{tmdbAssetUrl}}/w500{{ movie.poster_path }} 500w,
-      {{tmdbAssetUrl}}/w780{{ movie.poster_path }} 780w
-    "
+      {{tmdbAssetUrl}}/w780{{ movie.poster_path }} 780w"
     sizes="
-      (max-width: 92px) 92px,
-      (max-width: 154px) 154px,
-      (max-width: 185px) 185px,
-      (max-width: 342px) 342px,
-      (max-width: 342px) 342px,
-      (min-width: 342px) 500px"
+      (min-width: 500px) 500px,
+      100vw"
     alt="A poster for the movie {{ movie.title }}"
   />
   <div>

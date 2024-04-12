@@ -1,21 +1,29 @@
 {% layout "base" %}
-{% if movie.original_title %}
-  {% assign mov = movie.original_title %}
-{% else %}
-  {% assign mov = movie.name %}
-{% endif %}
 {% block content %}
 <sl-breadcrumb>
   <sl-breadcrumb-item href="/">
     <sl-icon slot="prefix" name="house"></sl-icon>
     Home
   </sl-breadcrumb-item>
-  <sl-breadcrumb-item>{{ mov }}</sl-breadcrumb-item>
+  <sl-breadcrumb-item>{{ movie.title }}</sl-breadcrumb-item>
 </sl-breadcrumb>
 <div class="movie__container">
   <div class="movie__info">
-    <img src="{{tmdbAssetUrl}}/w500/{{ movie.poster_path }}" alt="Movieposter for {{ mov }}" class="movie__info-image">
-    <h1 class="h1">{{ mov }}</h1>
+    <img
+      src="{{tmdbAssetUrl}}/original{{ movie.poster_path }}"
+      srcset="
+      {{tmdbAssetUrl}}/w92{{ movie.poster_path }} 92w,
+      {{tmdbAssetUrl}}/w154{{ movie.poster_path }} 154w,
+      {{tmdbAssetUrl}}/w185{{ movie.poster_path }} 185w,
+      {{tmdbAssetUrl}}/w342{{ movie.poster_path }} 342w,
+      {{tmdbAssetUrl}}/w500{{ movie.poster_path }} 500w,
+      {{tmdbAssetUrl}}/w780{{ movie.poster_path }} 780w"
+    sizes="
+      (min-width: 250px) 342px,
+      100vw"
+      alt="Movie poster for {{ movie.title }}"
+      class="movie__info-image">
+    <h1 class="h1">{{ movie.title }}</h1>
     <p class="movie__info-description">{{ movie.overview }}</p>
     <dl>
       <dt>Release date:</dt>
@@ -29,7 +37,15 @@
   </div>
 
   <div class="backdrop-image__container">
-    <img src="{{tmdbAssetUrl}}/w1280/{{ movie.backdrop_path }}" alt="" class="backdrop-image">
+    <img
+    src="{{tmdbAssetUrl}}/original{{ movie.backdrop_path }}"
+    srcset="
+      {{tmdbAssetUrl}}/w300{{ movie.poster_path }} 300w,
+      {{tmdbAssetUrl}}/w780{{ movie.poster_path }} 780w,
+      {{tmdbAssetUrl}}/w1280{{ movie.poster_path }} 1280w"
+    sizes="100vw"
+    alt="Movie backdrop for {{ movie.title }}"
+    class="backdrop-image">
   </div>
 </div>
 {% endblock %}

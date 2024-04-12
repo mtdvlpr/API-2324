@@ -1,9 +1,13 @@
-<sl-drawer label="Chatroom">
+<sl-drawer class="chat-drawer" label="Chatroom">
   <ul data-events></ul>
   <form id="chat-form" slot="footer" method="post" action="/chat">
-    <sl-input name="name" placeholder="Your name"></sl-input>
-    <sl-input name="message" placeholder="Type a message"></sl-input>
+    <hr>
+    <sl-input label="Name" name="name" placeholder="Your name" required></sl-input>
+    <sl-textarea label="Message" name="message" placeholder="Type a message" enterkeyhint="send" required></sl-textarea>
     <sl-button type="submit" variant="primary">Send</sl-button>
   </form>
 </sl-drawer>
-<sl-icon-button name="chat" label="Open chat"></sl-icon-button>
+<div class="chat-btn">
+  <sl-icon-button name="chat" label="Open chat"></sl-icon-button>
+  <sl-badge class="new-chats" variant="primary" pill pulse></sl-badge>
+</div>
