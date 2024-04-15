@@ -8,6 +8,7 @@ import { getAbsolutePath, isProduction } from './utils/general'
 import { renderView } from './utils/renderer'
 import { getMovie, getPopularMovies, searchMovies } from './utils/tmdb'
 import { getMessages, listenForMessages, saveMessage } from './utils/chat'
+import { initWebPush, sendNotification } from './utils/push'
 
 const app = new App()
 app
@@ -72,6 +73,21 @@ app.get('/events', async (_, res) => {
   listenForMessages((messages) => {
     res.write(`data: ${JSON.stringify(messages)}\n\n`)
   })
+})
+
+initWebPush()
+
+app.get('/notify/vapidPublicKey', (_, res) => {
+  res.send(process.env.VAPID_PUBLIC_KEY)
+})
+
+app.post('/notify/register', (_, res) => {
+  res.sendStatus(201)
+})
+
+app.post('/notify/send', (req, res) => {
+  console.log('Sending notification')
+  sendNotification(req, res)
 })
 
 app.listen(3000, () => console.log('Listening on http://localhost:3000'))

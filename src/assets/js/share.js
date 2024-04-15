@@ -1,3 +1,5 @@
+'use strict'
+
 export const initShareAPI = () => {
   const shareButtons = document.querySelectorAll('[data-share]')
   shareButtons.forEach((btn) => {

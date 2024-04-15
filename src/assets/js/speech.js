@@ -1,3 +1,5 @@
+'use strict'
+
 export const initSpeechAPI = () => {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition

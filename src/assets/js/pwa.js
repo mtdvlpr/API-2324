@@ -1,3 +1,5 @@
+'use strict'
+
 export const initPWA = async () => {
   if (navigator.serviceWorker && window.location.hostname !== 'localhost') {
     try {

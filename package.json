@@ -31,9 +31,11 @@
     "tsm": "^2.3.0",
     "typescript": "^5.4.4",
     "vite": "^5.2.8",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.19.5"
+    "@types/body-parser": "^1.19.5",
+    "@types/web-push": "^3.6.3"
   }
 }

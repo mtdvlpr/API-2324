@@ -5,11 +5,29 @@
 
   ul > li {
     padding: 0.5rem 0;
-    white-space: pre-wrap;
+
+    p {
+      white-space: pre-wrap;
+    }
   }
 
-  sl-input,
-  sl-textarea {
-    margin-bottom: 1rem;
+  form {
+    sl-input,
+    sl-textarea {
+      margin-bottom: 1rem;
+    }
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+
+      &.no-notify {
+        justify-content: end;
+
+        sl-icon-button[name='bell'] {
+          display: none;
+        }
+      }
+    }
   }
 }

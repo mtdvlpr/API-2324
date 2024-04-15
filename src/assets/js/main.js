@@ -1,3 +1,5 @@
+'use strict'
+
 import 'vite/modulepreload-polyfill'
 import '@styles/main.scss'
 import { initShareAPI } from './share'

@@ -4,10 +4,15 @@
     <hr>
     <sl-input label="Name" name="name" placeholder="Your name" required></sl-input>
     <sl-textarea label="Message" name="message" placeholder="Type a message" enterkeyhint="send" required></sl-textarea>
-    <sl-button type="submit" variant="primary">Send</sl-button>
+    <div class="chat-form-actions no-notify">
+      <sl-tooltip content="Get notified">
+        <sl-icon-button name="bell" label="Get notified"></sl-icon-button>
+      </sl-tooltip>
+      <sl-button type="submit" variant="primary">Send</sl-button>
+    </div>
   </form>
 </sl-drawer>
 <div class="chat-btn">
-  <sl-icon-button name="chat" label="Open chat"></sl-icon-button>
   <sl-badge class="new-chats" variant="primary" pill pulse></sl-badge>
+  <sl-icon-button name="chat" label="Open chat"></sl-icon-button>
 </div>
