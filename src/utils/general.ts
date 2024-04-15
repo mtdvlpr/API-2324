@@ -1,5 +1,7 @@
 import { join } from 'path'
 
+export const PRODUCTION_URL = 'https://api-2324.onrender.com/'
+
 export const isProduction =
   (process.env.NODE_ENV || 'production') === 'production'
 

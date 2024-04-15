@@ -1,7 +1,7 @@
 'use strict'
 
 export const initPWA = async () => {
-  if (navigator.serviceWorker && window.location.hostname !== 'localhost') {
+  if (window.navigator?.serviceWorker) {
     try {
       const worker = await navigator.serviceWorker.register('/sw.js')
       worker.update()

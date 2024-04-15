@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * Formats a date to a readable format
+ * @param {string} timestamp A timestamp
+ * @returns The formatted date string
+ */
 export const formatDate = (timestamp) => {
   const date = new Date(timestamp)
   if (new Date().toDateString() === date.toDateString()) {
@@ -13,8 +18,8 @@ export const formatDate = (timestamp) => {
 }
 
 /**
- *
- * @param {Date} date Date
+ * Formats a date to a relative time
+ * @param {Date} date The date
  */
 export const formatTimeAgo = (date) => {
   const diff = date.getTime() - new Date().getTime()
@@ -33,6 +38,11 @@ export const formatTimeAgo = (date) => {
   }).format(output[0], output[1])
 }
 
+/**
+ * Converts a base64 string to a Uint8Array
+ * @param {string} base64String The base64 string
+ * @returns {Uint8Array} The Uint8Array
+ */
 export const urlBase64ToUint8Array = (base64String) => {
   var padding = '='.repeat((4 - (base64String.length % 4)) % 4)
   var base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')

@@ -77,17 +77,24 @@ app.get('/events', async (_, res) => {
 
 initWebPush()
 
-app.get('/notify/vapidPublicKey', (_, res) => {
+app.get('/push/key', (_, res) => {
   res.send(process.env.VAPID_PUBLIC_KEY)
 })
 
-app.post('/notify/register', (_, res) => {
+app.post('/push/register', (_, res) => {
   res.sendStatus(201)
 })
 
-app.post('/notify/send', (req, res) => {
-  console.log('Sending notification')
-  sendNotification(req, res)
+app.post('/push/send', async (req, res) => {
+  const result = await sendNotification(
+    req.body.subscription,
+    req.body.payload,
+    req.body.ttl,
+    req.body.delay
+  )
+
+  if (result) res.sendStatus(201)
+  else res.sendStatus(500)
 })
 
 app.listen(3000, () => console.log('Listening on http://localhost:3000'))
