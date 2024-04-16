@@ -43,20 +43,28 @@ const requestNotificationPermission = async () => {
  * @param {string} msg The message
  * @param {{action:string;title:string;onclick: () => void}} action The action
  */
-export const sendNotification = (title, msg, action = null) => {
+export const sendNotification = async (title, msg, action = null) => {
   if (!window.Notification || Notification.permission !== 'granted') return
 
   try {
-    const notification = new Notification(title, {
+    const options = {
       lang: 'en',
       tag: 'new-messages',
       icon: `${window.location.origin}/img/logo/android/android-icon-512x512.png`,
       badge: `${window.location.origin}/img/logo/favicon-96x96.png`,
       body: msg,
       actions: action ? [action] : undefined,
-    })
+    }
 
-    notification.onclick = action.onclick
+    const registration = await navigator.serviceWorker.ready
+    const subscription = await registration.pushManager.getSubscription()
+
+    if (subscription) {
+      registration.showNotification(title, options)
+    } else {
+      const notification = new Notification(title, options)
+      notification.onclick = action.onclick
+    }
   } catch (e) {
     console.error('Error sending notification', e)
     toast('Could not send notification', e.message, 'danger')
