@@ -8,7 +8,7 @@ import { urlBase64ToUint8Array } from './utils'
  */
 export const initPushAPI = async () => {
   if (window.Notification && Notification.permission === 'granted') {
-    subscribePush()
+    await subscribePush()
   }
 }
 
@@ -99,7 +99,7 @@ export const sendPushNotification = async (title, msg) => {
   try {
     const subscription = await getPushSubscription()
     if (subscription) {
-      fetch('/push/send', {
+      await fetch('/push/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 import { toast } from './toast'
+import { subscribePush } from './push'
 
 const notifyBtn = document.querySelector('.chat-form-actions sl-icon-button')
 
@@ -18,6 +19,7 @@ const requestNotificationPermission = async () => {
   if (!window.Notification) return
   try {
     if (Notification.permission === 'granted') {
+      await subscribePush()
       sendNotification(
         'Notifications enabled',
         'You will now receive notifications'
@@ -25,6 +27,7 @@ const requestNotificationPermission = async () => {
     } else if (Notification.permission !== 'denied') {
       const permission = await Notification.requestPermission()
       if (permission === 'granted') {
+        await subscribePush()
         sendNotification(
           'Notifications enabled',
           'You will now receive notifications'
@@ -51,7 +54,7 @@ export const sendNotification = async (title, msg, action = null) => {
       lang: 'en',
       tag: 'new-messages',
       icon: `${window.location.origin}/img/logo/android/android-icon-512x512.png`,
-      badge: `${window.location.origin}/img/logo/favicon-96x96.png`,
+      badge: `${window.location.origin}/img/logo/android/android-icon-72x72.png`,
       body: msg,
       actions: action ? [action] : undefined,
     }
