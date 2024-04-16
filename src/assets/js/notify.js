@@ -5,7 +5,7 @@ const notifyBtn = document.querySelector('.chat-form-actions sl-icon-button')
  */
 export const initNotificationAPI = async () => {
   if (!window.Notification) return
-  notifyBtn.parentElement.classList.toggle('no-notify', false)
+  notifyBtn.closest('.no-notify').classList.toggle('no-notify', false)
   notifyBtn.addEventListener('click', requestNotificationPermission)
 }
 

@@ -2,12 +2,7 @@
 // between the application server and the push service.
 // For details, see https://tools.ietf.org/html/draft-ietf-webpush-protocol and
 // https://tools.ietf.org/html/draft-ietf-webpush-encryption.
-import {
-  setVapidDetails,
-  generateVAPIDKeys,
-  type PushSubscription,
-  sendNotification,
-} from 'web-push'
+import webPush from 'web-push'
 import { PRODUCTION_URL } from './general'
 import { Subscription, connectDb } from './db'
 
@@ -20,22 +15,28 @@ export const initWebPush = () => {
       'You must set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY ' +
         'environment variables. You can use the following ones:'
     )
-    console.log(generateVAPIDKeys())
+    console.log(webPush.generateVAPIDKeys())
     return
   }
 
   // Set the keys used for encrypting the push messages.
-  setVapidDetails(
+  webPush.setVapidDetails(
     PRODUCTION_URL,
     process.env.VAPID_PUBLIC_KEY,
     process.env.VAPID_PRIVATE_KEY
   )
 }
 
-let subscriptions: PushSubscription[] = []
+let subscriptions: webPush.PushSubscription[] = []
 
-export const saveSubscription = async (subscription: PushSubscription) => {
+export const saveSubscription = async (
+  subscription: webPush.PushSubscription
+) => {
   try {
+    if (subscriptions.some((sub) => sub.endpoint === subscription.endpoint)) {
+      return true
+    }
+
     await connectDb()
     await Subscription.create(subscription)
     subscriptions.push(subscription)
@@ -58,8 +59,14 @@ export const getSubscriptions = async () => {
   }
 }
 
-export const deleteSubscription = async (subscription: PushSubscription) => {
+export const deleteSubscription = async (
+  subscription: webPush.PushSubscription
+) => {
   try {
+    if (!subscriptions.some((sub) => sub.endpoint === subscription.endpoint)) {
+      return true
+    }
+
     await connectDb()
     await Subscription.deleteOne(subscription)
     subscriptions = subscriptions.filter(
@@ -81,14 +88,15 @@ export const deleteSubscription = async (subscription: PushSubscription) => {
  * @returns A promise that resolves to true if the notification was sent successfully
  */
 export const sendPushNotification = async (
-  subscription: PushSubscription,
+  subscription: webPush.PushSubscription,
   payload: { title: string } & NotificationOptions,
   TTL: number = 0,
   delay: number = 0
 ) => {
   try {
     await new Promise((resolve) => setTimeout(resolve, delay * 1000))
-    await sendNotification(subscription, JSON.stringify(payload), {
+    console.log('Sending push notification:', subscription.endpoint, payload)
+    await webPush.sendNotification(subscription, JSON.stringify(payload), {
       TTL,
     })
     return true
@@ -107,7 +115,7 @@ export const sendPushNotification = async (
  * @returns A promise that resolves to true if the notifications were sent successfully
  */
 export const sendPushNotifications = async (
-  subscription: PushSubscription | null,
+  subscription: webPush.PushSubscription | null,
   payload: { title: string } & NotificationOptions,
   TTL: number = 0,
   delay: number = 0

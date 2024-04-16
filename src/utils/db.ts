@@ -1,32 +1,29 @@
-import {
-  type ConnectOptions,
-  connection,
-  connect,
-  model,
-  Schema,
-} from 'mongoose'
+import mongoose from 'mongoose'
 
 const uri = process.env.MONGODB_URI
-const clientOptions: ConnectOptions = {
+const clientOptions: mongoose.ConnectOptions = {
   serverApi: { version: '1', strict: true, deprecationErrors: true },
 }
 
 export const connectDb = async () => {
   try {
-    if (!connection.readyState || connection.readyState === 99) {
-      await connect(uri, clientOptions)
+    if (
+      !mongoose.connection.readyState ||
+      mongoose.connection.readyState === 99
+    ) {
+      await mongoose.connect(uri, clientOptions)
     }
   } catch (e) {
     console.error('Error while connecting to database', e)
   }
 }
 
-export const Message = model(
+export const Message = mongoose.model(
   'Message',
-  new Schema({ name: String, message: String, timestamp: Date })
+  new mongoose.Schema({ name: String, message: String, timestamp: Date })
 )
 
-export const Subscription = model(
+export const Subscription = mongoose.model(
   'Subscription',
-  new Schema({ endpoint: String, keys: Object })
+  new mongoose.Schema({ endpoint: String, keys: Object })
 )

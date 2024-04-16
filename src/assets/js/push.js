@@ -31,12 +31,23 @@ export const subscribePush = async () => {
   try {
     const registration = await navigator.serviceWorker.ready
     const subscription = await registration.pushManager.getSubscription()
+    await fetch('/push/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(subscription),
+    })
     if (!subscription) {
       const response = await fetch('/push/key')
       const key = await response.text()
-      await registration.pushManager.subscribe({
+      const sub = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(key),
+      })
+
+      await fetch('/push/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sub),
       })
     }
   } catch (e) {
@@ -51,7 +62,14 @@ export const unsubscribePush = async () => {
   if (!window.PushManager) return
   try {
     const subscription = await getPushSubscription()
-    if (subscription) await subscription.unsubscribe()
+    if (subscription) {
+      await subscription.unsubscribe()
+      await fetch('/push/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(subscription),
+      })
+    }
   } catch (e) {
     console.error('Error unsubscribing from push', e)
   }
@@ -87,7 +105,7 @@ export const sendPushNotification = async (title, msg) => {
             title,
             body: msg,
           },
-          delay: 5,
+          delay: 0,
           ttl: 0,
         }),
       })
