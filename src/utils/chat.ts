@@ -4,8 +4,10 @@ export const saveMessage = async (name: string, message: string) => {
   try {
     await connectDb()
     await Message.create({ name, message, timestamp: new Date() })
+    return true
   } catch (e) {
     console.error('Error while saving message', e)
+    return false
   }
 }
 

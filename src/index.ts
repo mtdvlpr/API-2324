@@ -52,16 +52,14 @@ app.get('/search', async (req, res) => {
   return renderView(res, 'search', { title: 'Zoeken', query, movies })
 })
 
-app.get('/chat', (_, res) => {
-  return renderView(res, 'chat', { title: 'Chat' })
-})
-
 app.post('/chat', async (req, res) => {
+  let status = 200
   const { name, message } = req.body
   if (name && message) {
-    await saveMessage(name, message)
+    const result = await saveMessage(name, message)
+    if (!result) status = 500
   }
-  res.redirect('/chat')
+  res.redirect('/chat', status)
 })
 
 app.get('/events', async (_, res) => {
