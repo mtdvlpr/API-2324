@@ -66,7 +66,11 @@ export const sendNotification = async (title, msg, action = null) => {
       notification.onclick = action.onclick
     }
   } catch (e) {
-    console.error('Error sending notification', e)
-    toast('Could not send notification', e.message, 'danger')
+    if (document.hasFocus()) {
+      toast(title, msg)
+    } else {
+      console.error('Error sending notification', e)
+      toast('Could not send notification', e.message, 'danger')
+    }
   }
 }
