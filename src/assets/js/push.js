@@ -99,7 +99,6 @@ export const sendPushNotification = async (title, msg) => {
           subscription,
           payload: {
             lang: 'en',
-            tag: 'notification',
             icon: `${window.location.origin}/img/logo/android/android-icon-512x512.png`,
             badge: `${window.location.origin}/img/logo/favicon-96x96.png`,
             title,

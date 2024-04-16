@@ -46,7 +46,7 @@ export const sendNotification = (title, msg, action = null) => {
   try {
     const notification = new Notification(title, {
       lang: 'en',
-      tag: 'notification',
+      tag: 'new-messages',
       icon: `${window.location.origin}/img/logo/android/android-icon-512x512.png`,
       badge: `${window.location.origin}/img/logo/favicon-96x96.png`,
       body: msg,

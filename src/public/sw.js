@@ -17,6 +17,15 @@
     */
 
 /**
+ *  @Lifecycle Install
+ *  Skip waiting for old service worker to be finished.
+ */
+self.addEventListener('install', () => {
+  // The promise that skipWaiting() returns can be safely ignored.
+  self.skipWaiting()
+})
+
+/**
  *  @Lifecycle Activate
  *  New one activated when old isn't being used.
  *
