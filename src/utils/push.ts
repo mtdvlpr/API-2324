@@ -29,9 +29,14 @@ export const initWebPush = () => {
 
 let subscriptions: webPush.PushSubscription[] = []
 
+/**
+ * Saves a subscription to the database
+ * @param subscription The subscription
+ * @returns {Promise<true | string>} A promise that resolves to true if the subscription was saved successfully, or a string with the error message if an error occurred
+ */
 export const saveSubscription = async (
   subscription: webPush.PushSubscription
-) => {
+): Promise<true | string> => {
   try {
     if (subscriptions.some((sub) => sub.endpoint === subscription.endpoint)) {
       return true
@@ -43,25 +48,36 @@ export const saveSubscription = async (
     return true
   } catch (e) {
     console.error('Error while saving subscription', e)
-    return false
+    return e.message || 'Error while saving subscription'
   }
 }
 
-export const getSubscriptions = async () => {
+/**
+ * Gets all subscriptions from the database
+ * @returns {Promise<webPush.PushSubscription[]>} A promise that resolves to an array of subscriptions
+ */
+export const getSubscriptions = async (): Promise<
+  webPush.PushSubscription[]
+> => {
   try {
     await connectDb()
     const result = await Subscription.find()
     subscriptions = result.map((doc) => doc.toObject())
-    return result
+    return subscriptions
   } catch (e) {
     console.error('Error while fetching subscriptions', e)
     return []
   }
 }
 
+/**
+ * Deletes a subscription from the database
+ * @param subscription The subscription
+ * @returns {Promise<true | string>} A promise that resolves to true if the subscription was deleted successfully, or a string with the error message if an error occurred
+ */
 export const deleteSubscription = async (
   subscription: webPush.PushSubscription
-) => {
+): Promise<true | string> => {
   try {
     if (!subscriptions.some((sub) => sub.endpoint === subscription.endpoint)) {
       return true
@@ -75,7 +91,7 @@ export const deleteSubscription = async (
     return true
   } catch (e) {
     console.error('Error while deleting subscription', e)
-    return false
+    return e.message || 'Error while deleting subscription'
   }
 }
 
@@ -85,14 +101,14 @@ export const deleteSubscription = async (
  * @param payload The payload of the notification
  * @param TTL The TTL of the notification
  * @param delay The delay of the notification
- * @returns A promise that resolves to true if the notification was sent successfully
+ * @returns {Promise<true | string>} A promise that resolves to true if the notification was sent successfully, or a string with the error message if an error occurred
  */
 export const sendPushNotification = async (
   subscription: webPush.PushSubscription,
   payload: { title: string } & NotificationOptions,
   TTL: number = 0,
   delay: number = 0
-) => {
+): Promise<true | string> => {
   try {
     await new Promise((resolve) => setTimeout(resolve, delay * 1000))
     console.log('Sending push notification:', subscription.endpoint, payload)
@@ -102,7 +118,7 @@ export const sendPushNotification = async (
     return true
   } catch (e) {
     console.error('Error sending push notification:', e)
-    return false
+    return e.message || 'Error sending push notification'
   }
 }
 
@@ -112,24 +128,31 @@ export const sendPushNotification = async (
  * @param payload The payload of the notification
  * @param TTL The TTL of the notification
  * @param delay The delay of the notification
- * @returns A promise that resolves to true if the notifications were sent successfully
+ * @returns {Promise<true | string>} A promise that resolves to true if the notifications were sent successfully
  */
 export const sendPushNotifications = async (
   subscription: webPush.PushSubscription | null,
   payload: { title: string } & NotificationOptions,
   TTL: number = 0,
   delay: number = 0
-) => {
+): Promise<true | string> => {
   try {
     const promises = subscriptions
       .filter((sub) => !subscription || sub.endpoint !== subscription.endpoint)
       .map((sub) => sendPushNotification(sub, payload, TTL, delay))
     const results = await Promise.allSettled(promises)
-    return results.every(
+    const result = results.every(
       (result) => result.status === 'fulfilled' && result.value === true
     )
+    if (result === true) return true
+    else {
+      const errors = results.map(
+        (r) => r.status === 'fulfilled' && r.value !== true && r.value
+      )
+      throw new Error(errors.join('\n') || 'Error sending push notifications')
+    }
   } catch (e) {
     console.error('Error sending push notifications:', e)
-    return false
+    return e.message || 'Error sending push notifications'
   }
 }

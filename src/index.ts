@@ -86,14 +86,14 @@ app.get('/push/key', (_, res) => {
 
 app.post('/push/subscribe', async (req, res) => {
   const result = await saveSubscription(req.body)
-  if (result) res.sendStatus(201)
-  else res.sendStatus(500)
+  if (result === true) res.sendStatus(201)
+  else res.status(500).send(result)
 })
 
 app.post('/push/unsubscribe', async (req, res) => {
   const result = await deleteSubscription(req.body)
-  if (result) res.sendStatus(201)
-  else res.sendStatus(500)
+  if (result === true) res.sendStatus(201)
+  else res.status(500).send(result)
 })
 
 app.post('/push/send', async (req, res) => {
@@ -104,8 +104,8 @@ app.post('/push/send', async (req, res) => {
     req.body.delay
   )
 
-  if (result) res.sendStatus(201)
-  else res.sendStatus(500)
+  if (result === true) res.sendStatus(201)
+  else res.status(500).send(result)
 })
 
 app.post('/sw/log', (req, res) => {
