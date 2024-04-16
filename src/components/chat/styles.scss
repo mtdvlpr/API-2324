@@ -17,8 +17,9 @@
       margin-bottom: 1rem;
     }
 
-    > div {
+    .chat-form-actions {
       display: flex;
+      align-items: center;
       justify-content: space-between;
 
       &.no-notify {
