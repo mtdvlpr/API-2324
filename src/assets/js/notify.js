@@ -54,7 +54,7 @@ export const sendNotification = async (title, msg, action = null) => {
       lang: 'en',
       tag: 'new-messages',
       icon: `${window.location.origin}/img/logo/android/android-icon-512x512.png`,
-      badge: `${window.location.origin}/img/logo/monochrome-512x512.png`,
+      badge: `${window.location.origin}/img/logo/monochrome-icon-512x512.png`,
       body: msg,
     }
 
