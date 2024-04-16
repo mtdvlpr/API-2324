@@ -107,7 +107,7 @@ export const sendPushNotification = async (title, msg) => {
           payload: {
             lang: 'en',
             icon: `${window.location.origin}/img/logo/android/android-icon-512x512.png`,
-            badge: 'https://tests.peter.sh/resources/icons/11.png',
+            badge: 'https://tests.peter.sh/resources/icons/11.png', // TODO: fix this
             title,
             body: msg,
           },
