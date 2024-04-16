@@ -100,20 +100,22 @@ export const sendPushNotification = async (
 
 /**
  * Sends a push notification to all subscriptions
+ * @param subscription The subscription that's sending the notification
  * @param payload The payload of the notification
  * @param TTL The TTL of the notification
  * @param delay The delay of the notification
  * @returns A promise that resolves to true if the notifications were sent successfully
  */
 export const sendPushNotifications = async (
+  subscription: PushSubscription | null,
   payload: { title: string } & NotificationOptions,
   TTL: number = 0,
   delay: number = 0
 ) => {
   try {
-    const promises = subscriptions.map((subscription) =>
-      sendPushNotification(subscription, payload, TTL, delay)
-    )
+    const promises = subscriptions
+      .filter((sub) => !subscription || sub.endpoint !== subscription.endpoint)
+      .map((sub) => sendPushNotification(sub, payload, TTL, delay))
     const results = await Promise.allSettled(promises)
     return results.every(
       (result) => result.status === 'fulfilled' && result.value === true

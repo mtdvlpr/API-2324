@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { App } from '@tinyhttp/app'
 import { logger } from '@tinyhttp/logger'
 import sirv from 'sirv'
-import parser from 'body-parser'
+import { json, urlencoded } from 'body-parser'
 
 import { getAbsolutePath, isProduction } from './utils/general'
 import { renderView } from './utils/renderer'
@@ -12,14 +12,14 @@ import {
   deleteSubscription,
   initWebPush,
   saveSubscription,
-  sendPushNotification,
+  sendPushNotifications,
 } from './utils/push'
 
 const app = new App()
 app
   .use(logger())
-  .use(parser.json())
-  .use(parser.urlencoded({ extended: false }))
+  .use(json())
+  .use(urlencoded({ extended: false }))
 
 app.use('/', sirv(getAbsolutePath('src', 'public')))
 
@@ -99,7 +99,7 @@ app.post('/push/unregister', async (req, res) => {
 })
 
 app.post('/push/send', async (req, res) => {
-  const result = await sendPushNotification(
+  const result = await sendPushNotifications(
     req.body.subscription,
     req.body.payload,
     req.body.ttl,

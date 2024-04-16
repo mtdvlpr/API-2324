@@ -1,6 +1,6 @@
 'use strict'
 
-import { sendPushNotification, getPushSubscription } from './push'
+import { sendPushNotification } from './push'
 import { sendNotification } from './notify'
 import { formatDate } from './utils'
 
@@ -81,24 +81,17 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
     navigator.clearAppBadge()
   }
 
-  if (nrOfUnreadMessages /* && !document.hasFocus()*/) {
-    const subscription = await getPushSubscription()
-    if (subscription)
-      sendPushNotification(
-        'New message(s)',
-        `You have ${nrOfUnreadMessages} unread message(s)`
-      )
-    else
-      sendNotification(
-        'New message(s)',
-        `You have ${nrOfUnreadMessages} unread message(s)`,
-        [
-          {
-            action: 'openChat',
-            title: 'Open chat',
-          },
-        ]
-      )
+  if (nrOfUnreadMessages && !document.hasFocus()) {
+    sendNotification(
+      'New message(s)',
+      `You have ${nrOfUnreadMessages} unread message(s)`,
+      [
+        {
+          action: 'openChat',
+          title: 'Open chat',
+        },
+      ]
+    )
   }
 }
 
@@ -111,15 +104,17 @@ const initForm = (form) => {
     try {
       e.preventDefault()
       const formData = new FormData(form)
+
+      const name = formData.get('name')
+      const message = formData.get('message')
+
       await fetch('/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.get('name'),
-          message: formData.get('message'),
-        }),
+        body: JSON.stringify({ name, message }),
       })
       form.reset()
+      sendPushNotification(`New message from ${name}`, message)
     } catch (e) {
       console.error(e)
     }
