@@ -133,7 +133,7 @@ export const sendPushNotification = async (
 export const sendPushNotifications = async (
   subscription: webPush.PushSubscription | null,
   payload: { title: string } & NotificationOptions,
-  TTL: number = 0,
+  TTL: number = 5,
   delay: number = 0
 ): Promise<true | string> => {
   try {

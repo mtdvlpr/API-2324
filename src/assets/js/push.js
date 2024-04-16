@@ -110,8 +110,6 @@ export const sendPushNotification = async (title, msg) => {
             title,
             body: msg,
           },
-          delay: 0,
-          ttl: 0,
         }),
       })
     }

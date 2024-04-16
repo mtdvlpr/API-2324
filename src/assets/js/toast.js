@@ -5,18 +5,13 @@ import { escapeHTML } from './utils'
 
 /**
  * Sends a toast message to the user
- * @param {string} message The message
  * @param {string} title The title
+ * @param {string} message The message
  * @param {'primary' | 'success' | 'neutral' | 'warning' | 'danger'} variant The variant
  * @param {number} duration The duration in milliseconds
  * @returns
  */
-export const toast = (
-  message,
-  title = '',
-  variant = 'primary',
-  duration = 3000
-) => {
+export const toast = (title, message, variant = 'primary', duration = 3000) => {
   const alert = Object.assign(document.createElement('sl-alert'), {
     variant,
     duration,
