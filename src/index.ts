@@ -8,7 +8,12 @@ import { getAbsolutePath, isProduction } from './utils/general'
 import { renderView } from './utils/renderer'
 import { getMovie, getPopularMovies, searchMovies } from './utils/tmdb'
 import { getMessages, listenForMessages, saveMessage } from './utils/chat'
-import { initWebPush, sendNotification } from './utils/push'
+import {
+  deleteSubscription,
+  initWebPush,
+  saveSubscription,
+  sendPushNotification,
+} from './utils/push'
 
 const app = new App()
 app
@@ -81,12 +86,20 @@ app.get('/push/key', (_, res) => {
   res.send(process.env.VAPID_PUBLIC_KEY)
 })
 
-app.post('/push/register', (_, res) => {
-  res.sendStatus(201)
+app.post('/push/register', async (req, res) => {
+  const result = await saveSubscription(req.body)
+  if (result) res.sendStatus(201)
+  else res.sendStatus(500)
+})
+
+app.post('/push/unregister', async (req, res) => {
+  const result = await deleteSubscription(req.body)
+  if (result) res.sendStatus(201)
+  else res.sendStatus(500)
 })
 
 app.post('/push/send', async (req, res) => {
-  const result = await sendNotification(
+  const result = await sendPushNotification(
     req.body.subscription,
     req.body.payload,
     req.body.ttl,

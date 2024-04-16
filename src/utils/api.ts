@@ -1,4 +1,4 @@
-import _fetch, { RequestInit } from 'node-fetch'
+import _fetch, { type RequestInit } from 'node-fetch'
 import { normalizeURL } from './general'
 
 /**

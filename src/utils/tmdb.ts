@@ -1,6 +1,11 @@
-import { RequestInit } from 'node-fetch'
+import { type RequestInit } from 'node-fetch'
 import { fetchJSON } from './api'
-import { Movie, MovieBase, MovieListResponse, MovieMapped } from '@/types/tmdb'
+import type {
+  Movie,
+  MovieBase,
+  MovieListResponse,
+  MovieMapped,
+} from '@/types/tmdb'
 
 /**
  * Fetches data from the TMDB API

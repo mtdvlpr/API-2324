@@ -2,7 +2,7 @@ import { Liquid } from 'liquidjs'
 import { readFileSync } from 'fs'
 
 import { getAbsolutePath, isProduction } from './general'
-import { Response } from '@tinyhttp/app'
+import { type Response } from '@tinyhttp/app'
 
 const engine = new Liquid({
   extname: '/template.liquid',

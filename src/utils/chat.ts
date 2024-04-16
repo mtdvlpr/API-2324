@@ -1,31 +1,8 @@
-import mongoose from 'mongoose'
-
-const uri = process.env.MONGODB_URI
-const clientOptions: mongoose.ConnectOptions = {
-  serverApi: { version: '1', strict: true, deprecationErrors: true },
-}
-
-const Message = mongoose.model(
-  'Message',
-  new mongoose.Schema({ name: String, message: String, timestamp: Date })
-)
-
-const connect = async () => {
-  try {
-    if (
-      !mongoose.connection.readyState ||
-      mongoose.connection.readyState === 99
-    ) {
-      await mongoose.connect(uri, clientOptions)
-    }
-  } catch (e) {
-    console.error('Error while connecting to database', e)
-  }
-}
+import { Message, connectDb } from './db'
 
 export const saveMessage = async (name: string, message: string) => {
   try {
-    await connect()
+    await connectDb()
     await Message.create({ name, message, timestamp: new Date() })
   } catch (e) {
     console.error('Error while saving message', e)
@@ -34,7 +11,7 @@ export const saveMessage = async (name: string, message: string) => {
 
 export const getMessages = async () => {
   try {
-    await connect()
+    await connectDb()
     const messages = await Message.find().sort({ timestamp: -1 })
     return messages.sort(
       (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
@@ -49,7 +26,7 @@ export const listenForMessages = async (
   callback: (messages: any[]) => void
 ) => {
   try {
-    await connect()
+    await connectDb()
     const changeStream = Message.watch()
     changeStream.on('change', async () => {
       const messages = await getMessages()
