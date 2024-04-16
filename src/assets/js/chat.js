@@ -23,7 +23,7 @@ export const initChat = () => {
 
 /**
  * Initializes the chat drawer
- * @param {*} drawer The drawer element
+ * @param {HTMLElement} drawer The drawer element
  * @param {HTMLButtonElement} openBtn The button that opens the drawer
  */
 const initDrawer = (drawer, openBtn) => {
@@ -34,7 +34,21 @@ const initDrawer = (drawer, openBtn) => {
     drawer.show()
     setNrOfReadMessages(list.children.length)
     notifyUser(notifyBadge, 0)
+    scrollToBottom()
   })
+}
+
+/**
+ * Scrolls to the bottom of the chat
+ */
+const scrollToBottom = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 100))
+  const body = document
+    .querySelector('.chat-drawer')
+    .shadowRoot.querySelector('.drawer__body')
+  console.log('body', body)
+  console.log('height', body.scrollHeight)
+  body.scrollTo(0, body.scrollHeight)
 }
 
 /**
@@ -47,6 +61,7 @@ const initListener = (list) => {
     const messages = JSON.parse(e.data)
     notifyUser(notifyBadge, messages.length - getNrOfReadMessages())
     fillChat(list, messages)
+    scrollToBottom()
   })
 }
 
@@ -84,10 +99,12 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
 
   if (nrOfUnreadMessages) {
     if (document.hasFocus()) {
-      toast(
-        'New message(s)',
-        `You have ${nrOfUnreadMessages} unread message(s)`
-      )
+      if (!drawer.open) {
+        toast(
+          'New message(s)',
+          `You have ${nrOfUnreadMessages} unread message(s)`
+        )
+      }
     } else {
       sendNotification(
         'New message(s)',
@@ -122,6 +139,7 @@ const initForm = (form) => {
         body: JSON.stringify({ name, message }),
       })
       form.reset()
+      scrollToBottom()
       sendPushNotification(`New message from ${name}`, message)
     } catch (e) {
       console.error(e)
