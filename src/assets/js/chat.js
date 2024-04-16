@@ -3,6 +3,7 @@
 import { sendPushNotification } from './push'
 import { sendNotification } from './notify'
 import { formatDate } from './utils'
+import { toast } from './toast'
 
 // HTML elements
 const chatForm = document.getElementById('chat-form')
@@ -81,17 +82,24 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
     navigator.clearAppBadge()
   }
 
-  if (nrOfUnreadMessages && !document.hasFocus()) {
-    sendNotification(
-      'New message(s)',
-      `You have ${nrOfUnreadMessages} unread message(s)`,
-      [
-        {
-          action: 'openChat',
-          title: 'Open chat',
-        },
-      ]
-    )
+  if (nrOfUnreadMessages) {
+    if (document.hasFocus()) {
+      toast(
+        'New message(s)',
+        `You have ${nrOfUnreadMessages} unread message(s)`
+      )
+    } else {
+      sendNotification(
+        'New message(s)',
+        `You have ${nrOfUnreadMessages} unread message(s)`,
+        [
+          {
+            action: 'openChat',
+            title: 'Open chat',
+          },
+        ]
+      )
+    }
   }
 }
 
@@ -117,6 +125,7 @@ const initForm = (form) => {
       sendPushNotification(`New message from ${name}`, message)
     } catch (e) {
       console.error(e)
+      toast('Could not send message', e.message, 'danger')
     }
   })
 }

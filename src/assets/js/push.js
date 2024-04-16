@@ -1,3 +1,6 @@
+'use strict'
+
+import { toast } from './toast'
 import { urlBase64ToUint8Array } from './utils'
 
 /**
@@ -18,7 +21,8 @@ export const getPushSubscription = async () => {
     const registration = await navigator.serviceWorker.ready
     return await registration.pushManager.getSubscription()
   } catch (e) {
-    console.error('Error getting subscription', e)
+    console.error('Error getting push subscription', e)
+    toast('Could not get push subscription', e.message, 'danger')
     return null
   }
 }
@@ -52,6 +56,7 @@ export const subscribePush = async () => {
     }
   } catch (e) {
     console.error('Error subscribing to push', e)
+    toast('Could not enable push notifications', e.message, 'danger')
   }
 }
 
@@ -72,6 +77,7 @@ export const unsubscribePush = async () => {
     }
   } catch (e) {
     console.error('Error unsubscribing from push', e)
+    toast('Could not disable push notifications', e.message, 'danger')
   }
 }
 
@@ -111,5 +117,6 @@ export const sendPushNotification = async (title, msg) => {
     }
   } catch (e) {
     console.error('Error sending push notification', e)
+    toast('Could not send push notifications', e.message, 'danger')
   }
 }

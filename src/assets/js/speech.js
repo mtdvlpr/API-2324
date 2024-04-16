@@ -1,5 +1,7 @@
 'use strict'
 
+import { toast } from './toast'
+
 export const initSpeechAPI = () => {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition
@@ -38,6 +40,11 @@ export const initSpeechAPI = () => {
 
     recognition.onend = () => {
       output.setAttribute('help-text', '')
+    }
+
+    recognition.onerror = (e) => {
+      console.error(e)
+      toast('Could not recognize speech', e.message, 'danger')
     }
 
     voiceSearchBtn.addEventListener('click', () => {

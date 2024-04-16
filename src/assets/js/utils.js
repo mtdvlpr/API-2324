@@ -55,3 +55,9 @@ export const urlBase64ToUint8Array = (base64String) => {
   }
   return outputArray
 }
+
+export const escapeHTML = (html) => {
+  const div = document.createElement('div')
+  div.textContent = html
+  return div.innerHTML
+}

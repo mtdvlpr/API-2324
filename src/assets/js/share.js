@@ -1,5 +1,7 @@
 'use strict'
 
+import { toast } from './toast'
+
 export const initShareAPI = () => {
   const shareButtons = document.querySelectorAll('[data-share]')
   shareButtons.forEach((btn) => {
@@ -27,5 +29,6 @@ const shareMovie = async (movie) => {
     })
   } catch (e) {
     console.error('Error trying to share a movie', e)
+    toast('Could not share movie', e.message, 'danger')
   }
 }

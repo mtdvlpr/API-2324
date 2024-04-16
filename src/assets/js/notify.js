@@ -1,3 +1,5 @@
+import { toast } from './toast'
+
 const notifyBtn = document.querySelector('.chat-form-actions sl-icon-button')
 
 /**
@@ -31,6 +33,7 @@ const requestNotificationPermission = async () => {
     }
   } catch (e) {
     console.error('Error requesting notification permission', e)
+    toast('Could not enable notifications', e.message, 'danger')
   }
 }
 
@@ -56,5 +59,6 @@ export const sendNotification = (title, msg, action = null) => {
     notification.onclick = action.onclick
   } catch (e) {
     console.error('Error sending notification', e)
+    toast('Could not send notification', e.message, 'danger')
   }
 }
