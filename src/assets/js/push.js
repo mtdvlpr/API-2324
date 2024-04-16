@@ -35,12 +35,13 @@ export const subscribePush = async () => {
   try {
     const registration = await navigator.serviceWorker.ready
     const subscription = await registration.pushManager.getSubscription()
-    await fetch('/push/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(subscription),
-    })
-    if (!subscription) {
+    if (subscription) {
+      await fetch('/push/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(subscription),
+      })
+    } else {
       const response = await fetch('/push/key')
       const key = await response.text()
       const sub = await registration.pushManager.subscribe({
