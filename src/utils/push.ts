@@ -111,7 +111,6 @@ export const sendPushNotification = async (
 ): Promise<true | string> => {
   try {
     await new Promise((resolve) => setTimeout(resolve, delay * 1000))
-    console.log('Sending push notification:', subscription.endpoint, payload)
     await webPush.sendNotification(subscription, JSON.stringify(payload), {
       TTL,
     })
