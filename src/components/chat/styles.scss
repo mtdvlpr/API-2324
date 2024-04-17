@@ -1,8 +1,19 @@
-.chat-drawer {
-  *::part(form-control-label) {
-    float: left;
-  }
+body > .chat-box {
+  display: none;
+}
 
+@media (display-mode: picture-in-picture) {
+  .chat-box {
+    ul {
+      min-height: 100px;
+      height: 50vh;
+      overflow: auto;
+    }
+  }
+}
+
+.chat-box,
+.chat-drawer {
   ul > li {
     padding: 0.5rem 0;
 
@@ -10,24 +21,28 @@
       white-space: pre-wrap;
     }
   }
+}
 
-  form {
-    sl-input,
-    sl-textarea {
-      margin-bottom: 1rem;
-    }
+.chat-form {
+  *::part(form-control-label) {
+    float: left;
+  }
 
-    .chat-form-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  sl-input,
+  sl-textarea {
+    margin-bottom: 1rem;
+  }
 
-      &.no-notify {
-        justify-content: end;
+  .chat-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        sl-icon-button[name='bell'] {
-          display: none;
-        }
+    &.no-notify {
+      justify-content: end;
+
+      sl-icon-button[name='bell'] {
+        display: none;
       }
     }
   }

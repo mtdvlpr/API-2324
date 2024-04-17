@@ -58,16 +58,15 @@ export const sendNotification = async (title, msg, action = null) => {
       body: msg,
     }
 
-    if (action && 'actions' in window.Notification.prototype) {
-      options.actions = [action]
-    }
-
     const registration = await navigator.serviceWorker.ready
     const subscription = await registration.pushManager.getSubscription()
 
     if (subscription) {
       registration.showNotification(title, options)
     } else {
+      if (action && 'actions' in window.Notification.prototype) {
+        options.actions = [action]
+      }
       const notification = new Notification(title, options)
       notification.onclick = action.onclick
     }

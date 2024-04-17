@@ -6,19 +6,19 @@ import { formatDate } from './utils'
 import { toast } from './toast'
 
 // HTML elements
-const chatForm = document.getElementById('chat-form')
-const list = document.querySelector('[data-events]')
+const chatForms = document.querySelectorAll('.chat-form')
+const lists = document.querySelectorAll('[data-events]')
 const drawer = document.querySelector('.chat-drawer')
 const openBtn = document.querySelector('.chat-btn sl-icon-button')
 const notifyBadge = document.querySelector('.new-chats')
 const header = document.querySelector('header')
 
 export const initChat = () => {
-  if (!chatForm || !list || !drawer || !openBtn) return
+  if (!chatForms.length || !lists.length || !drawer || !openBtn) return
 
   initDrawer(drawer, openBtn)
-  initListener(list)
-  initForm(chatForm)
+  initListener(lists)
+  initForms(chatForms)
 }
 
 /**
@@ -32,7 +32,7 @@ const initDrawer = (drawer, openBtn) => {
 
   openBtn.addEventListener('click', () => {
     drawer.show()
-    setNrOfReadMessages(list.children.length)
+    setNrOfReadMessages(lists.item(0).children.length)
     notifyUser(notifyBadge, 0)
     scrollToBottom()
   })
@@ -40,44 +40,60 @@ const initDrawer = (drawer, openBtn) => {
 
 /**
  * Scrolls to the bottom of the chat
+ * @param {HTMLElement} el The element to scroll
  */
-const scrollToBottom = async () => {
+const scrollToBottom = async (el) => {
   await new Promise((resolve) => setTimeout(resolve, 100))
-  const body = document
-    .querySelector('.chat-drawer')
-    .shadowRoot.querySelector('.drawer__body')
-  console.log('body', body)
-  console.log('height', body.scrollHeight)
-  body.scrollTo(0, body.scrollHeight)
+  if (el) {
+    el.scrollTo(0, el.scrollHeight)
+  } else {
+    const body = document
+      .querySelector('.chat-drawer')
+      ?.shadowRoot.querySelector('.drawer__body')
+    if (body) {
+      body.scrollTo(0, body.scrollHeight)
+    }
+  }
 }
 
 /**
  * Initializes the event listener for new messages
- * @param {HTMLUListElement} list The list element
+ * @param {HTMLUListElement[]} lists The list elements
  */
-const initListener = (list) => {
+const initListener = (lists) => {
   const source = new EventSource('/events')
   source.addEventListener('message', (e) => {
     const messages = JSON.parse(e.data)
     notifyUser(notifyBadge, messages.length - getNrOfReadMessages())
-    fillChat(list, messages)
+    const pipWindow = window.documentPictureInPicture?.window
+    if (pipWindow) {
+      const ul = pipWindow.document.querySelector('ul')
+      fillChat([ul], messages)
+      scrollToBottom(ul)
+    }
+
+    fillChat(lists, messages)
     scrollToBottom()
   })
 }
 
 /**
  * Fills the list with chat messages
- * @param {HTMLUListElement} list The list element
+ * @param {HTMLUListElement[]} lists The list elements
  * @param {{name: string;timestamp: string;message:string}[]} messages The chat messages
  */
-const fillChat = (list, messages) => {
-  if (list) {
-    list.innerHTML = ''
+const fillChat = (lists, messages) => {
+  if (lists.length) {
+    lists.forEach((list) => {
+      list.innerHTML = ''
+    })
     messages.forEach((message) => {
       const li = document.createElement('li')
       li.innerHTML = `<b>[${formatDate(message.timestamp)}] ${message.name}</b>
       <p>${message.message}</p>`
-      list.appendChild(li)
+      lists.forEach((list) => {
+        list.appendChild(li.cloneNode(true))
+      })
     })
   }
 }
@@ -122,29 +138,33 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
 
 /**
  * Initializes the form submit event
- * @param {HTMLFormElement} form The form element
+ * @param {HTMLFormElement[]} forms The form elements
  */
-const initForm = (form) => {
-  form.addEventListener('submit', async (e) => {
-    try {
-      e.preventDefault()
-      const formData = new FormData(form)
+export const initForms = (forms) => {
+  forms.forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      if (!form.checkValidity()) return
 
-      const name = formData.get('name')
-      const message = formData.get('message')
+      try {
+        e.preventDefault()
+        const formData = new FormData(form)
 
-      await fetch('/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, message }),
-      })
-      form.reset()
-      scrollToBottom()
-      sendPushNotification(`New message from ${name}`, message)
-    } catch (e) {
-      console.error(e)
-      toast('Could not send message', e.message, 'danger')
-    }
+        const name = formData.get('name')
+        const message = formData.get('message')
+
+        await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, message }),
+        })
+        form.reset()
+        scrollToBottom()
+        sendPushNotification(`New message from ${name}`, message)
+      } catch (e) {
+        console.error(e)
+        toast('Could not send message', e.message, 'danger')
+      }
+    })
   })
 }
 
