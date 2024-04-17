@@ -44,6 +44,11 @@ const togglePictureInPicture = async () => {
       }
     })
 
+    // TODO: Fix scripts not working in Picture-in-Picture mode
+    ;[...document.scripts].forEach((script) => {
+      pipWindow.document.head.appendChild(script.cloneNode(true))
+    })
+
     const main = document.createElement('main')
     main.appendChild(chatBox)
     pipWindow.document.body.append(main)
