@@ -4,9 +4,13 @@
 
 I began by setting up the structure of the project. I wanted to have a working development and production environment before starting the actual work. I also wanted to have a good understanding of the project structure and the tools I would be using. By the end of the day I had a working Hello world app.
 
+![v1](https://github.com/mtdvlpr/API-2324/assets/46671786/3d860374-9a64-4254-9fb8-1b507cc2663f)
+
 ## 2024-4-4
 
 I added some components to the project and tried to render them from the base layout. I also added some basic styles to the project.
+
+![v1 5](https://github.com/mtdvlpr/API-2324/assets/46671786/2f387464-7a0b-4dc8-941c-2fd4eeb98f7b)
 
 ## 2024-4-5
 
@@ -25,6 +29,8 @@ I shared these ideas with Cyd during the feedback session. She agreed with the i
 
 I created the index page with a grid of popular movie cards. I also implemented the Share API to share a movie. I decided to use a Web Component library for the project, so that I could focus on the Web APIs. I chose Shoelace for the project.
 
+![v2](https://github.com/mtdvlpr/API-2324/assets/46671786/ae4c7f27-33bd-4015-aa37-574be233d4d9)
+
 ## 2024-4-9
 
 I started working on making the application an actual PWA. I generated some logo assets and added a manifest file to the project. I also added a service worker to the project.
@@ -32,6 +38,10 @@ I started working on making the application an actual PWA. I generated some logo
 I also created a search and detail page for the movies. I implemented the Web Speech API for voice search.
 
 I added some meta tags to the project for better SEO and created an opensearch.xml file to allow users to add the application as a search engine to their browser.
+
+![v3-home](https://github.com/mtdvlpr/API-2324/assets/46671786/534ad6a9-0e03-4123-aa1a-8985d3e3a9c9)
+![v3-detail](https://github.com/mtdvlpr/API-2324/assets/46671786/0c9359af-38c2-4c5f-a551-dc539cba0245)
+![v3-search](https://github.com/mtdvlpr/API-2324/assets/46671786/b087ec57-f822-433d-9cec-a25d6dcdb557)
 
 ## 2024-4-10
 
@@ -46,6 +56,8 @@ I started on a global chat using Server Sent Events.
 I had a feedback session with Declan. He was impressed with the progress I had made. He explained how to correctly implement `srcset` and `sizes` for images.
 
 I cleanup up the chat code and fixed the styling. I also fixed the `srcset` and `sizes` attributes for the images.
+
+![chat-v1](https://github.com/mtdvlpr/API-2324/assets/46671786/d4a4d3ac-e136-4e5b-8185-2e606cd6fa99)
 
 ## 2024-4-15
 
