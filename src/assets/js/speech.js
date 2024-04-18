@@ -2,12 +2,14 @@
 
 import { toast } from './toast'
 
+const voiceSearchBtn = document.querySelector('.voice-search')
+
 export const initSpeechAPI = () => {
+  if (!voiceSearchBtn) return
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition
 
   if (SpeechRecognition) {
-    const voiceSearchBtn = document.querySelector('.voice-search')
     voiceSearchBtn.style.display = 'block'
 
     const output = document.getElementById('search-input')
@@ -44,7 +46,7 @@ export const initSpeechAPI = () => {
 
     recognition.onerror = (e) => {
       console.error(e)
-      toast('Could not recognize speech', e.message, 'danger')
+      toast('Could not recognize speech', e.message || e.error, 'danger')
     }
 
     voiceSearchBtn.addEventListener('click', () => {

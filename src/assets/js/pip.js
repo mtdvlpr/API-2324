@@ -1,13 +1,13 @@
 const pipBtn = document.querySelector('.pip')
 const chatBox = document.querySelector('body > .chat-box')
 
-export const initPictureInPicture = () => {
+export const initDocumentPictureInPicture = () => {
   if (!window.documentPictureInPicture) return
   pipBtn.classList.toggle('no-pip', false)
-  pipBtn.addEventListener('click', togglePictureInPicture)
+  pipBtn.addEventListener('click', toggleDocumentPictureInPicture)
 }
 
-const togglePictureInPicture = async () => {
+const toggleDocumentPictureInPicture = async () => {
   if (!window.documentPictureInPicture) return
   if (window.documentPictureInPicture.window) {
     document.querySelector('.chat-drawer')?.show()
