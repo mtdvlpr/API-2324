@@ -1,6 +1,7 @@
   <sl-card class="movie-card">
   <img
     slot="image"
+    {% if movie.poster_path %}
     src="{{tmdbAssetUrl}}/original{{ movie.poster_path }}"
     srcset="
       {{tmdbAssetUrl}}/w92{{ movie.poster_path }} 92w,
@@ -13,6 +14,10 @@
       (min-width: 500px) 500px,
       100vw"
     alt="A poster for the movie {{ movie.title }}"
+    {% else %}
+    src="/img/poster-placeholder.png"
+    alt=""
+    {% endif %}
   />
   <div>
     <strong>{{movie.title}}</strong>
