@@ -1,6 +1,9 @@
 'use strict'
 import { toast } from './toast'
 
+/**
+ * Initializes the PWA
+ */
 export const initPWA = async () => {
   if (window.navigator?.serviceWorker) {
     try {

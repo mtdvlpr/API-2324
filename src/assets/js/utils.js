@@ -56,6 +56,11 @@ export const urlBase64ToUint8Array = (base64String) => {
   return outputArray
 }
 
+/**
+ * Escapes HTML characters in a string
+ * @param {string} html The HTML string
+ * @returns The escaped HTML string
+ */
 export const escapeHTML = (html) => {
   const div = document.createElement('div')
   div.textContent = html

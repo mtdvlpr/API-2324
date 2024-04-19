@@ -1,12 +1,18 @@
 const pipBtn = document.querySelector('.pip')
 const chatBox = document.querySelector('body > .chat-box')
 
+/**
+ * Initializes the Document Picture-in-Picture API
+ */
 export const initDocumentPictureInPicture = () => {
   if (!window.documentPictureInPicture) return
   pipBtn.classList.toggle('no-pip', false)
   pipBtn.addEventListener('click', toggleDocumentPictureInPicture)
 }
 
+/**
+ * Toggles the Document Picture-in-Picture mode
+ */
 const toggleDocumentPictureInPicture = async () => {
   if (!window.documentPictureInPicture) return
   if (window.documentPictureInPicture.window) {

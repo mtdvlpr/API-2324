@@ -2,6 +2,9 @@
 
 import { toast } from './toast'
 
+/**
+ * Initializes the share API
+ */
 export const initShareAPI = () => {
   const shareButtons = document.querySelectorAll('[data-share]')
   shareButtons.forEach((btn) => {

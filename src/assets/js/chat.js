@@ -13,6 +13,9 @@ const openBtn = document.querySelector('.chat-btn sl-icon-button')
 const notifyBadge = document.querySelector('.new-chats')
 const header = document.querySelector('header')
 
+/**
+ * Initializes the chat
+ */
 export const initChat = () => {
   if (!chatForms.length || !lists.length || !drawer || !openBtn) return
 
