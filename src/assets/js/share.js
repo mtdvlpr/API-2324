@@ -8,7 +8,13 @@ export const initShareAPI = () => {
     if (window.navigator?.share) {
       btn.parentElement.classList.toggle('no-share', false)
       btn.addEventListener('click', (e) => {
-        shareMovie(e.target.getAttribute('data-share'))
+        try {
+          const movie = JSON.parse(e.target.getAttribute('data-share'))
+          shareMovie(movie)
+        } catch (e) {
+          console.error(e)
+          toast('Could not share movie', e.message, 'danger')
+        }
       })
     } else {
       btn.parentElement.removeChild(btn)
