@@ -52,7 +52,7 @@ const scrollToBottom = async (el) => {
   } else {
     const body = document
       .querySelector('.chat-drawer')
-      ?.shadowRoot.querySelector('.drawer__body')
+      ?.shadowRoot?.querySelector('.drawer__body')
     if (body) {
       body.scrollTo(0, body.scrollHeight)
     }
