@@ -59,6 +59,7 @@
     {% endif %}
   </div>
 
+  {% if movie.backdrop_path %}
   <div class="backdrop-image__container">
     <img
     src="{{tmdbAssetUrl}}/original{{ movie.backdrop_path }}"
@@ -70,5 +71,6 @@
     alt="Movie backdrop for {{ movie.title }}"
     class="backdrop-image">
   </div>
+  {% endif %}
 </div>
 {% endblock %}
