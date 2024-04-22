@@ -18,7 +18,7 @@ export const initDocumentPictureInPicture = () => {
 const toggleDocumentPictureInPicture = async () => {
   if (!window.documentPictureInPicture) return
   if (window.documentPictureInPicture.window) {
-    document.querySelector('.chat-drawer')?.show()
+    document.querySelector('.chat-btn sl-icon-button').click()
     await window.documentPictureInPicture.window.close()
   } else {
     /**
@@ -30,7 +30,7 @@ const toggleDocumentPictureInPicture = async () => {
     })
 
     pipWindow.addEventListener('pagehide', () => {
-      document.querySelector('.chat-drawer')?.show()
+      document.querySelector('.chat-btn sl-icon-button').click()
     })
     ;[...document.styleSheets].forEach((styleSheet) => {
       try {

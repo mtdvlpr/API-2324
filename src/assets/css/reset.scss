@@ -127,6 +127,8 @@ table {
 *::before,
 *::after {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
 }
 
 /* Prevent font size inflation */
@@ -134,7 +136,6 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-  scroll-behavior: smooth;
 }
 
 /* Set core body defaults */

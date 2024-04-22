@@ -10,6 +10,7 @@ import { initChat } from './chat'
 import { initNotificationAPI } from './notify'
 import { initPushAPI } from './push'
 import { initDocumentPictureInPicture } from './pip'
+import { initTrendingFilter, initSearchFilter } from './filters'
 
 initPWA()
 initShareAPI()
@@ -18,3 +19,5 @@ initNotificationAPI()
 initPushAPI()
 initChat()
 initDocumentPictureInPicture()
+initTrendingFilter()
+initSearchFilter()

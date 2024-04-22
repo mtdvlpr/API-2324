@@ -34,3 +34,13 @@ export const renderView = (
     engine.renderFileSync(`views/${template}/template.liquid`, templateData)
   )
 }
+
+export const renderPartial = (
+  res: Response,
+  component: string,
+  data: Record<string, any>
+) => {
+  return res.send(
+    engine.renderFileSync(`components/${component}/template.liquid`, data)
+  )
+}

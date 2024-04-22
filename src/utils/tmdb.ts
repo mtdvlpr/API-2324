@@ -45,6 +45,15 @@ export const getPopularMovies = async () => {
   }
 }
 
+export const getTrendingMovies = async (time: 'day' | 'week' = 'day') => {
+  const result = await fetch<MovieListResponse>(`trending/movie/${time}`)
+  if (!result) return { results: [] }
+  return {
+    ...result,
+    results: result.results.map(mapMovie),
+  }
+}
+
 export const getMovie = async (id: number, withTrailer?: boolean) => {
   const query = withTrailer ? { append_to_response: 'videos' } : {}
   const movie = await fetch<Movie>(`movie/${id}`, query)

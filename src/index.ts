@@ -5,8 +5,13 @@ import sirv from 'sirv'
 import parser from 'body-parser'
 
 import { getAbsolutePath, isProduction } from './utils/general'
-import { renderView } from './utils/renderer'
-import { getMovie, getPopularMovies, searchMovies } from './utils/tmdb'
+import { renderPartial, renderView } from './utils/renderer'
+import {
+  getMovie,
+  getPopularMovies,
+  getTrendingMovies,
+  searchMovies,
+} from './utils/tmdb'
 import { getMessages, listenForMessages, saveMessage } from './utils/chat'
 import {
   deleteSubscription,
@@ -27,10 +32,29 @@ if (isProduction) {
   app.use('/assets', sirv(getAbsolutePath('dist', 'assets')))
 }
 
-app.get('/', async (_, res) => {
-  const result = await getPopularMovies()
-  const movies = result?.results || []
-  return renderView(res, 'home', { title: 'Home', movies })
+app.get('/', async (req, res) => {
+  const trendingTime = req.query.trending === 'week' ? 'week' : 'day'
+  if (req.query.partial === 'true') {
+    const result = await getTrendingMovies(trendingTime)
+    return renderPartial(res, 'trending', { movies: result?.results || [] })
+  } else {
+    const promises = [getPopularMovies(), getTrendingMovies(trendingTime)]
+    const movies = []
+    const trending = []
+    const results = await Promise.allSettled(promises)
+    if (results[0].status === 'fulfilled') {
+      movies.push(...results[0].value.results)
+    }
+    if (results[1].status === 'fulfilled') {
+      trending.push(...results[1].value.results)
+    }
+    return renderView(res, 'home', {
+      title: 'Home',
+      movies,
+      trending,
+      trendingTime,
+    })
+  }
 })
 
 app.get('/movie/:id/', async (req, res) => {
@@ -40,16 +64,24 @@ app.get('/movie/:id/', async (req, res) => {
 })
 
 app.get('/search', async (req, res) => {
-  const query = req.query.q
-  if (!query) {
-    return renderView(res, 'search', { title: 'Zoeken', query, movies: [] })
-  }
+  const query = Array.isArray(req.query.q) ? req.query.q.join(' ') : req.query.q
+  if (req.query.partial === 'true') {
+    if (!query) {
+      return renderPartial(res, 'results', { results: [] })
+    }
 
-  const result = await searchMovies(
-    Array.isArray(query) ? query.join(' ') : query
-  )
-  const movies = result?.results || []
-  return renderView(res, 'search', { title: 'Zoeken', query, movies })
+    const result = await searchMovies(query)
+    const movies = result?.results || []
+    return renderPartial(res, 'results', { results: movies })
+  } else {
+    if (!query) {
+      return renderView(res, 'search', { title: 'Zoeken', query, movies: [] })
+    }
+
+    const result = await searchMovies(query)
+    const movies = result?.results || []
+    return renderView(res, 'search', { title: 'Zoeken', query, movies })
+  }
 })
 
 app.post('/chat', async (req, res) => {

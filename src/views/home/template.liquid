@@ -1,8 +1,20 @@
-{% layout "base" %}
+{% layout "base", page: 'home' %}
 {% block content %}
 {% render 'search' %}
 <section>
-  <h1>Popular</h1>
+  <header>
+    <h2>Trending</h2>
+    <form action="/" method="get" class="trending-form">
+      <sl-button-group label="Timeframe">
+      <sl-button type="submit" name="trending" value="day" size="medium" pill {% if trendingTime != 'week' %}variant="primary"{% endif %}>Today</sl-button>
+      <sl-button type="submit" name="trending" value="week" size="medium" pill {% if trendingTime == 'week' %}variant="primary"{% endif %}>this week</sl-button>
+    </sl-button-group>
+    </form>
+  </header>
+  {% render 'trending', movies: trending %}
+</section>
+<section>
+  <h2>Popular</h2>
   <div class="auto-grid">
     {% for movie in movies %}
     {% render 'poster', movie: movie %}

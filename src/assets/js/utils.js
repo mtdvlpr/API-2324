@@ -66,3 +66,19 @@ export const escapeHTML = (html) => {
   div.textContent = html
   return div.innerHTML
 }
+
+export const onFormSubmit = async (e) => {
+  try {
+    e.preventDefault()
+    const params = new URLSearchParams({
+      [e.submitter.name]: e.submitter.value,
+    })
+    const url = `?${params.toString()}`
+    window.history?.pushState({}, '', url)
+    const result = await fetch(`${url}&partial=true`)
+    const html = await result.text()
+    document.querySelector('.trending-list').innerHTML = html
+  } catch (e) {
+    console.error(e)
+  }
+}

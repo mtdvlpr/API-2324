@@ -1,0 +1,10 @@
+<section class="search-results">
+  <h1>Search results ({{results.size}})</h1>
+  <div class="auto-grid">
+    {% for movie in results %}
+    {% render 'poster', movie: movie %}
+    {% else %}
+    <p>There are no movies that matched your query.</p>
+    {% endfor %}
+  </div>
+</section>

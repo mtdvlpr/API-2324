@@ -1,14 +1,5 @@
-{% layout "base" %}
+{% layout "base", page: 'search' %}
 {% block content %}
 {% render 'search', query: query %}
-<section>
-  <h1>Search results ({{movies.size}})</h1>
-  <div class="auto-grid">
-    {% for movie in movies %}
-    {% render 'poster', movie: movie %}
-    {% else %}
-    <p>There are no movies that matched your query.</p>
-    {% endfor %}
-  </div>
-</section>
+{% render 'results', results: movies %}
 {% endblock %}

@@ -8,3 +8,8 @@ a:hover {
   color: var(--link-hover-color);
   text-decoration: none;
 }
+
+a.active {
+  outline-offset: 2px;
+  outline: blue solid 2px;
+}
