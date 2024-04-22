@@ -53,7 +53,7 @@ I started on a global chat using Server Sent Events.
 
 ## 2024-4-12
 
-I had a feedback session with Declan. He was impressed with the progress I had made. He explained how to correctly implement `srcset` and `sizes` for images.
+I had a feedback session with Declan. He explained how to correctly implement `srcset` and `sizes` for images.
 
 I cleanup up the chat code and fixed the styling. I also fixed the `srcset` and `sizes` attributes for the images.
 
@@ -72,3 +72,11 @@ I improved the notification feature, by sending actual Push Notifications throug
 ## 2024-4-17
 
 I implemented the Document Picture-in-Picture API for the chat. You can now pop out the chat into a separate floating window.
+
+## 2024-4-19
+
+I had a feedback session with Cyd. She was impressed with the progress I had made. I added a fallback image when movies don't have a poster.
+
+## 2024-4-22
+
+I fixed the styling of the Document Picture-in-Picture chat. I added a Trending movies section to the home page with a switch to toggle between trending movies today and this week. I added JavaScript logic to intercept the form submission in order to load the new list without refreshing the page. I implemented the View Transition API to animate the list change. I added the same logic to the search page.
