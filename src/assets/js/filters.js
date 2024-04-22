@@ -38,7 +38,7 @@ const updateTrendingResults = async (submitter) => {
     trendingForm.querySelectorAll('sl-button').forEach((btn) => {
       btn.setAttribute(
         'variant',
-        btn.getAttribute('value') === submitter.value ? 'primary' : 'secondary'
+        btn.getAttribute('value') === submitter.value ? 'primary' : 'default'
       )
     })
   } catch (e) {
