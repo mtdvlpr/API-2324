@@ -145,30 +145,37 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
  */
 export const initForms = (forms) => {
   forms.forEach((form) => {
-    form.addEventListener('submit', async (e) => {
-      if (!form.checkValidity()) return
-
-      try {
-        e.preventDefault()
-        const formData = new FormData(form)
-
-        const name = formData.get('name')
-        const message = formData.get('message')
-
-        await fetch('/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, message }),
-        })
-        form.reset()
-        scrollToBottom()
-        sendPushNotification(`New message from ${name}`, message)
-      } catch (e) {
-        console.error(e)
-        toast('Could not send message', e.message, 'danger')
-      }
-    })
+    form.removeEventListener('submit', onSubmit)
+    form.addEventListener('submit', onSubmit)
   })
+}
+
+/**
+ * Submits the chat form on submit
+ * @param {SubmitEvent} e The submit event
+ */
+const onSubmit = async (e) => {
+  if (!e.target.checkValidity()) return
+
+  try {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+
+    const name = formData.get('name')
+    const message = formData.get('message')
+
+    await fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message }),
+    })
+    e.target.reset()
+    scrollToBottom()
+    sendPushNotification(`New message from ${name}`, message)
+  } catch (e) {
+    console.error(e)
+    toast('Could not send message', e.message, 'danger')
+  }
 }
 
 let nrOfReadMessages = 0

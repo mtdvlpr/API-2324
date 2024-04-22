@@ -1,14 +1,15 @@
 <div class="chat-box">
   <ul data-events></ul>
+  <hr>
   <form class="chat-form" method="post" action="/chat">
-    <hr>
-    <sl-input label="Name" name="name" placeholder="Your name" required></sl-input>
-    <sl-textarea label="Message" name="message" placeholder="Type a message" enterkeyhint="send" required></sl-textarea>
-    <div class="chat-form-actions no-notify">
-      <sl-tooltip content="Get notified">
-        <sl-icon-button name="bell" label="Get notified"></sl-icon-button>
-      </sl-tooltip>
-      <sl-button type="submit" variant="primary">Send</sl-button>
+    <div>
+      <label for="chat-input-name">Name</label>
+      <input id="chat-input-name" name="name" placeholder="Your name" required />
     </div>
+    <div>
+      <label for="chat-input-message">Message</label>
+      <textarea id="chat-input-message" name="message" placeholder="Type a message" rows="4" required></textarea>
+    </div>
+    <button type="submit">Send</button>
   </form>
 </div>

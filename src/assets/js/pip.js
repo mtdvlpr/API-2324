@@ -1,3 +1,5 @@
+import { initForms } from './chat'
+
 const pipBtn = document.querySelector('.pip')
 const chatBox = document.querySelector('body > .chat-box')
 
@@ -23,8 +25,8 @@ const toggleDocumentPictureInPicture = async () => {
      * @type {Window} The Picture-in-Picture window
      */
     const pipWindow = await window.documentPictureInPicture.requestWindow({
-      width: chatBox.clientWidth,
-      height: chatBox.clientHeight,
+      width: 500,
+      height: 700,
     })
 
     pipWindow.addEventListener('pagehide', () => {
@@ -52,12 +54,25 @@ const toggleDocumentPictureInPicture = async () => {
 
     // TODO: Fix scripts not working in Picture-in-Picture mode
     ;[...document.scripts].forEach((script) => {
-      pipWindow.document.head.appendChild(script.cloneNode(true))
+      pipWindow.document.head.appendChild(script)
     })
+
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
+
+    pipWindow.document
+      .querySelector('html')
+      .classList.toggle(`sl-theme-${prefersDark ? 'dark' : 'light'}`, true)
+    pipWindow.document
+      .querySelector('html')
+      .classList.toggle(`sl-theme-${prefersDark ? 'light' : 'dark'}`, false)
 
     const main = document.createElement('main')
     main.appendChild(chatBox)
     pipWindow.document.body.append(main)
+    initForms(pipWindow.document.querySelectorAll('form'))
+
     document.querySelector('.chat-drawer')?.hide()
 
     await new Promise((resolve) => setTimeout(resolve, 100))
