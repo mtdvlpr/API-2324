@@ -71,7 +71,9 @@ I improved the notification feature, by sending actual Push Notifications throug
 
 ## 2024-4-17
 
-I implemented the Document Picture-in-Picture API for the chat. You can now pop out the chat into a separate floating window.
+I implemented the Document Picture-in-Picture API for the chat. You can now pop out the chat into a separate floating window. The only issue is that the styling of my web components are not moved over. I tracked it down to the external script for the web components that isn't executed again in the PiP window.
+
+![pip](https://github.com/mtdvlpr/API-2324/assets/46671786/1da7002f-a554-4e38-b09f-5c8daaa7d56a)
 
 ## 2024-4-19
 
@@ -80,3 +82,7 @@ I had a feedback session with Cyd. She was impressed with the progress I had mad
 ## 2024-4-22
 
 I fixed the styling of the Document Picture-in-Picture chat. I added a Trending movies section to the home page with a switch to toggle between trending movies today and this week. I added JavaScript logic to intercept the form submission in order to load the new list without refreshing the page. I implemented the View Transition API to animate the list change. I added the same logic to the search page.
+
+![Screenshot 2024-04-23 091655](https://github.com/mtdvlpr/API-2324/assets/46671786/e4d6ae53-6c44-4e16-bb15-ab532db40110)
+![Screenshot 2024-04-23 091754](https://github.com/mtdvlpr/API-2324/assets/46671786/3a84923d-6939-43a8-96b9-155db1883be3)
+
