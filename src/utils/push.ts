@@ -32,7 +32,7 @@ let subscriptions: webPush.PushSubscription[] = []
 /**
  * Saves a subscription to the database
  * @param subscription The subscription
- * @returns {Promise<true | string>} A promise that resolves to true if the subscription was saved successfully, or a string with the error message if an error occurred
+ * @returns A promise that resolves to true if the subscription was saved successfully, or a string with the error message if an error occurred
  */
 export const saveSubscription = async (
   subscription: webPush.PushSubscription
@@ -54,7 +54,7 @@ export const saveSubscription = async (
 
 /**
  * Gets all subscriptions from the database
- * @returns {Promise<webPush.PushSubscription[]>} A promise that resolves to an array of subscriptions
+ * @returns A promise that resolves to an array of subscriptions
  */
 export const getSubscriptions = async (): Promise<
   webPush.PushSubscription[]
@@ -73,7 +73,7 @@ export const getSubscriptions = async (): Promise<
 /**
  * Deletes a subscription from the database
  * @param subscription The subscription
- * @returns {Promise<true | string>} A promise that resolves to true if the subscription was deleted successfully, or a string with the error message if an error occurred
+ * @returns A promise that resolves to true if the subscription was deleted successfully, or a string with the error message if an error occurred
  */
 export const deleteSubscription = async (
   subscription: webPush.PushSubscription
@@ -101,7 +101,7 @@ export const deleteSubscription = async (
  * @param payload The payload of the notification
  * @param TTL The TTL of the notification
  * @param delay The delay of the notification
- * @returns {Promise<true | string>} A promise that resolves to true if the notification was sent successfully, or a string with the error message if an error occurred
+ * @returns A promise that resolves to true if the notification was sent successfully, or a string with the error message if an error occurred
  */
 export const sendPushNotification = async (
   subscription: webPush.PushSubscription,
@@ -127,7 +127,7 @@ export const sendPushNotification = async (
  * @param payload The payload of the notification
  * @param TTL The TTL of the notification
  * @param delay The delay of the notification
- * @returns {Promise<true | string>} A promise that resolves to true if the notifications were sent successfully
+ * @returns A promise that resolves to true if the notifications were sent successfully
  */
 export const sendPushNotifications = async (
   subscription: webPush.PushSubscription | null,

@@ -32,10 +32,19 @@ const fetch = async <T = unknown>(
   }
 }
 
+/**
+ * Maps a movie to include the rating
+ * @param movie The movie to map
+ * @returns The mapped movie
+ */
 const mapMovie = <T extends MovieBase>(movie: T): T & MovieMapped => {
   return { ...movie, rating: movie.vote_average / 2 }
 }
 
+/**
+ * Fetches the popular movies
+ * @returns The popular movies
+ */
 export const getPopularMovies = async () => {
   const result = await fetch<MovieListResponse>('movie/popular')
   if (!result) return { results: [] }
@@ -45,6 +54,11 @@ export const getPopularMovies = async () => {
   }
 }
 
+/**
+ * Fetches the trending movies
+ * @param time The time period
+ * @returns The trending movies
+ */
 export const getTrendingMovies = async (time: 'day' | 'week' = 'day') => {
   const result = await fetch<MovieListResponse>(`trending/movie/${time}`)
   if (!result) return { results: [] }
@@ -54,6 +68,12 @@ export const getTrendingMovies = async (time: 'day' | 'week' = 'day') => {
   }
 }
 
+/**
+ * Fetches a movie by ID
+ * @param id The ID
+ * @param withTrailer Wether to include the trailer
+ * @returns The movie
+ */
 export const getMovie = async (id: number, withTrailer?: boolean) => {
   const query = withTrailer ? { append_to_response: 'videos' } : {}
   const movie = await fetch<Movie>(`movie/${id}`, query)
@@ -66,6 +86,11 @@ export const getMovie = async (id: number, withTrailer?: boolean) => {
   return movie ? mapMovie(movie) : null
 }
 
+/**
+ * Searches for movies
+ * @param query The search query
+ * @returns The search results
+ */
 export const searchMovies = async (query: string) => {
   const result = await fetch<MovieListResponse>('search/movie', { query })
   if (!result) return { results: [] }

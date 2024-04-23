@@ -5,6 +5,9 @@ const clientOptions: mongoose.ConnectOptions = {
   serverApi: { version: '1', strict: true, deprecationErrors: true },
 }
 
+/**
+ * Connects to the database
+ */
 export const connectDb = async () => {
   try {
     if (

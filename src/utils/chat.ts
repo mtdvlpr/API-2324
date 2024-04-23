@@ -1,5 +1,11 @@
 import { Message, connectDb } from './db'
 
+/**
+ * Saves a message to the database
+ * @param name The name of the user
+ * @param message The message
+ * @returns A boolean indicating success
+ */
 export const saveMessage = async (name: string, message: string) => {
   try {
     await connectDb()
@@ -11,6 +17,10 @@ export const saveMessage = async (name: string, message: string) => {
   }
 }
 
+/**
+ * Gets all messages from the database
+ * @returns The messages
+ */
 export const getMessages = async () => {
   try {
     await connectDb()
@@ -24,6 +34,10 @@ export const getMessages = async () => {
   }
 }
 
+/**
+ * Listens for new messages in the database
+ * @param callback The callback to call when a new message is received
+ */
 export const listenForMessages = async (
   callback: (messages: any[]) => void
 ) => {

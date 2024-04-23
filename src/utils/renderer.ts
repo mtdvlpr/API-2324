@@ -15,6 +15,13 @@ const engine = new Liquid({
   },
 })
 
+/**
+ * Renders a view
+ * @param res The Response object
+ * @param template The template to render
+ * @param data The data to pass to the template
+ * @returns The response to render
+ */
 export const renderView = (
   res: Response,
   template: string,
@@ -35,6 +42,13 @@ export const renderView = (
   )
 }
 
+/**
+ * Renders a partial view
+ * @param res The Response object
+ * @param component The component to render
+ * @param data The data to pass to the component
+ * @returns The response to render
+ */
 export const renderPartial = (
   res: Response,
   component: string,
