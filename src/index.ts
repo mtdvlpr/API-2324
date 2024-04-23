@@ -106,7 +106,7 @@ app.post('/chat', async (req, res) => {
     const result = await saveMessage(name, message)
     if (!result) status = 500
   }
-  res.redirect('/chat', status)
+  res.redirect('/', status)
 })
 
 // Endpoint to get chat messages through Server-Sent Events
