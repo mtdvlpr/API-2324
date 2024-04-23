@@ -6,7 +6,6 @@ const voiceSearchBtn = document.querySelector('.voice-search')
 
 /**
  * Initializes the speech API
- * @returns
  */
 export const initSpeechAPI = () => {
   if (!voiceSearchBtn) return

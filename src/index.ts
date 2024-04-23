@@ -140,9 +140,4 @@ app.post('/push/send', async (req, res) => {
   else res.status(500).send(result)
 })
 
-app.post('/sw/log', (req, res) => {
-  console.log('Service Worker log:', req.body)
-  res.sendStatus(200)
-})
-
 app.listen(3000, () => console.log('Listening on http://localhost:3000'))

@@ -86,3 +86,27 @@ I fixed the styling of the Document Picture-in-Picture chat. I added a Trending 
 ![Screenshot 2024-04-23 091655](https://github.com/mtdvlpr/API-2324/assets/46671786/e4d6ae53-6c44-4e16-bb15-ab532db40110)
 ![Screenshot 2024-04-23 091754](https://github.com/mtdvlpr/API-2324/assets/46671786/3a84923d-6939-43a8-96b9-155db1883be3)
 
+## Reflection
+
+I learned a lot during this project. I never made a server-side rendered application before, so I had to learn how to render the application from Node.js. I also learned how to use Web APIs like Server Sent Events, Web Share API, Picture-in-Picture API, and Web Speech API. I really enjoyed working with these APIs and I'm looking forward to using them in future projects.
+
+## Features
+
+I have created the following functionality:
+
+- A homepage with a grid of popular movies and a trending movies section that can be toggled between today and this week
+- A search page to search for movies
+- A detail page for each movie with a trailer
+- A global chatroom
+- Toast notifications for unread chat messages and errors
+
+I have used the following Web APIs:
+
+- Service Worker API for PWA support and Push Notifications
+- Web Share API for sharing movies
+- Document Picture-in-Picture API for the chatroom
+- Web Speech API for voice search
+- Server Sent Events for the chatroom
+- View Transition API for animating the trending and search list change
+- History API for intercepting the form submission of trending toggle and search and loading the new list without refreshing the page
+- Notification API, Badging API, and Push API for notifications of unread chat messages

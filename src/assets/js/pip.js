@@ -51,8 +51,6 @@ const toggleDocumentPictureInPicture = async () => {
         pipWindow.document.head.appendChild(link)
       }
     })
-
-    // TODO: Fix scripts not working in Picture-in-Picture mode
     ;[...document.scripts].forEach((script) => {
       pipWindow.document.head.appendChild(script)
     })

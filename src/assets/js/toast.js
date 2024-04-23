@@ -32,7 +32,7 @@ export const toast = (title, message, variant = 'primary', duration = 3000) => {
 /**
  * Gets the appropriate icon for the variant
  * @param {'primary' | 'success' | 'neutral' | 'warning' | 'danger'} variant The variant
- * @returns
+ * @returns {string} The icon name
  */
 const getVariantIcon = (variant) => {
   switch (variant) {

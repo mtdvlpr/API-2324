@@ -2,11 +2,12 @@ const trendingForm = document.querySelector('.trending-form')
 const searchForm = document.querySelector('.search-form')
 const searchResults = document.querySelector('.search-results')
 
+/**
+ * Initializes the trending filter
+ */
 export const initTrendingFilter = () => {
-  console.log('trendingForm', trendingForm)
   if (!trendingForm) return
   trendingForm.addEventListener('submit', async (e) => {
-    console.log('submit', e)
     try {
       e.preventDefault()
       updateTrendingResults(e.submitter)
@@ -46,6 +47,9 @@ const updateTrendingResults = async (submitter) => {
   }
 }
 
+/**
+ * Initializes the search filter
+ */
 export const initSearchFilter = () => {
   if (!searchForm || !searchResults) return
 
@@ -64,6 +68,10 @@ export const initSearchFilter = () => {
   })
 }
 
+/**
+ * Updates the search results based on the form data
+ * @param {FormData} formData The form data
+ */
 const updateSearchResults = async (formData) => {
   try {
     const params = new URLSearchParams({ q: formData.get('q') })
