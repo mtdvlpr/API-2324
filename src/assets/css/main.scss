@@ -10,12 +10,14 @@
 /* View styles */
 @import '@/views/home/styles.scss';
 @import '@/views/detail/styles.scss';
+@import '@/views/search/styles.scss';
 
 /* Component styles */
 @import '@/components/chat/styles.scss';
 @import '@/components/chatroom/styles.scss';
 @import '@/components/header/styles.scss';
 @import '@/components/poster/styles.scss';
+@import '@/components/results/styles.scss';
 @import '@/components/search/styles.scss';
 @import '@/components/trending/styles.scss';
 @import '@/components/youtube/styles.scss';
