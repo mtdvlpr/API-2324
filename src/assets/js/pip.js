@@ -1,3 +1,5 @@
+'use strict'
+
 import { initForms } from './chat'
 
 const pipBtn = document.querySelector('.pip')
@@ -17,6 +19,8 @@ export const initDocumentPictureInPicture = () => {
  */
 const toggleDocumentPictureInPicture = async () => {
   if (!window.documentPictureInPicture) return
+
+  // If Picture-in-Picture is enabled, close the window
   if (window.documentPictureInPicture.window) {
     document.querySelector('.chat-btn sl-icon-button').click()
     await window.documentPictureInPicture.window.close()
@@ -29,9 +33,12 @@ const toggleDocumentPictureInPicture = async () => {
       height: 700,
     })
 
+    // When the Picture-in-Picture window is closed, activate the chat in the main window
     pipWindow.addEventListener('pagehide', () => {
       document.querySelector('.chat-btn sl-icon-button').click()
     })
+
+    // Copy the styles and scripts to the Picture-in-Picture window
     ;[...document.styleSheets].forEach((styleSheet) => {
       try {
         const cssRules = [...styleSheet.cssRules]
@@ -55,6 +62,7 @@ const toggleDocumentPictureInPicture = async () => {
       pipWindow.document.head.appendChild(script)
     })
 
+    // Set the theme based on the user's preference
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches
@@ -66,6 +74,7 @@ const toggleDocumentPictureInPicture = async () => {
       .querySelector('html')
       .classList.toggle(`sl-theme-${prefersDark ? 'light' : 'dark'}`, false)
 
+    // Copy the chat to the Picture-in-Picture window
     const main = document.createElement('main')
     main.appendChild(chatBox)
     pipWindow.document.body.append(main)
@@ -73,6 +82,7 @@ const toggleDocumentPictureInPicture = async () => {
 
     document.querySelector('.chat-drawer')?.hide()
 
+    // Scroll to the bottom of the chat
     await new Promise((resolve) => setTimeout(resolve, 100))
     const ul = pipWindow.document.querySelector('ul')
     ul.scrollTo(0, ul.scrollHeight)

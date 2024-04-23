@@ -9,7 +9,10 @@ export const initShareAPI = () => {
   const shareButtons = document.querySelectorAll('[data-share]')
   shareButtons.forEach((btn) => {
     if (window.navigator?.share) {
+      // Show share button
       btn.parentElement.classList.toggle('no-share', false)
+
+      // Add click event listener
       btn.addEventListener('click', (e) => {
         try {
           const movie = JSON.parse(e.target.getAttribute('data-share'))

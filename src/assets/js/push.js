@@ -35,6 +35,8 @@ export const subscribePush = async () => {
   try {
     const registration = await navigator.serviceWorker.ready
     const subscription = await registration.pushManager.getSubscription()
+
+    // If we already have a subscription, send it to the server
     if (subscription) {
       await fetch('/push/subscribe', {
         method: 'POST',

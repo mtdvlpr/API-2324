@@ -1,4 +1,5 @@
 'use strict'
+
 import { toast } from './toast'
 
 /**

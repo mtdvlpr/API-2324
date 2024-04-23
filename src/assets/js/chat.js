@@ -30,9 +30,11 @@ export const initChat = () => {
  * @param {HTMLButtonElement} openBtn The button that opens the drawer
  */
 const initDrawer = (drawer, openBtn) => {
+  // Show chat toggle button
   header.classList.toggle('no-chat', false)
   header.insertBefore(document.createElement('div'), header.firstChild)
 
+  // Add event listener to open the drawer
   openBtn.addEventListener('click', () => {
     drawer.show()
     setNrOfReadMessages(lists.item(0).children.length)
@@ -68,6 +70,8 @@ const initListener = (lists) => {
   source.addEventListener('message', (e) => {
     const messages = JSON.parse(e.data)
     notifyUser(notifyBadge, messages.length - getNrOfReadMessages())
+
+    // If Picture-in-Picture is enabled, update the chat there as well
     const pipWindow = window.documentPictureInPicture?.window
     if (pipWindow) {
       const ul = pipWindow.document.querySelector('ul')
@@ -86,10 +90,13 @@ const initListener = (lists) => {
  * @param {{name: string;timestamp: string;message:string}[]} messages The chat messages
  */
 const fillChat = (lists, messages) => {
+  // Empty the lists
   if (lists.length) {
     lists.forEach((list) => {
       list.innerHTML = ''
     })
+
+    // Fill the lists with the new messages
     messages.forEach((message) => {
       const li = document.createElement('li')
       li.innerHTML = `<b>[${formatDate(message.timestamp)}] ${message.name}</b>
@@ -110,6 +117,7 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
   badge.textContent = nrOfUnreadMessages
   badge.style.display = nrOfUnreadMessages ? 'block' : 'none'
 
+  // Update the app badge
   if (window.navigator?.setAppBadge && nrOfUnreadMessages) {
     navigator.setAppBadge(nrOfUnreadMessages)
   } else if (window.navigator?.clearAppBadge && !nrOfUnreadMessages) {
@@ -117,6 +125,7 @@ const notifyUser = async (badge, nrOfUnreadMessages) => {
   }
 
   if (nrOfUnreadMessages) {
+    // If app is focused, show a toast, otherwise show a native notification
     if (document.hasFocus()) {
       if (!drawer.open) {
         toast(
@@ -159,8 +168,9 @@ const onSubmit = async (e) => {
 
   try {
     e.preventDefault()
-    const formData = new FormData(e.target)
 
+    // Get the form data
+    const formData = new FormData(e.target)
     const name = formData.get('name')
     const message = formData.get('message')
 
@@ -169,8 +179,12 @@ const onSubmit = async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message }),
     })
+
+    // Reset the form and scroll to the bottom
     e.target.reset()
     scrollToBottom()
+
+    // Send a push notification to all clients
     sendPushNotification(`New message from ${name}`, message)
   } catch (e) {
     console.error(e)

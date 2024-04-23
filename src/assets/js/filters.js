@@ -1,3 +1,5 @@
+'use strict'
+
 const trendingForm = document.querySelector('.trending-form')
 const searchForm = document.querySelector('.search-form')
 const searchResults = document.querySelector('.search-results')
@@ -10,7 +12,8 @@ export const initTrendingFilter = () => {
   trendingForm.addEventListener('submit', async (e) => {
     try {
       e.preventDefault()
-      updateTrendingResults(e.submitter)
+
+      // If the browser supports view transitions, use it
       if (document.startViewTransition) {
         document.startViewTransition(() => updateTrendingResults(e.submitter))
       } else {
@@ -28,14 +31,23 @@ export const initTrendingFilter = () => {
  */
 const updateTrendingResults = async (submitter) => {
   try {
+    // Get the selected filter value from the pressed button
     const params = new URLSearchParams({
       [submitter.name]: submitter.value,
     })
+
+    // Update the URL with the selected filter
     const url = `?${params.toString()}`
     window.history?.pushState({}, '', url)
+
+    // Fetch the partial HTML of the trending movies based on the selected filter
     const result = await fetch(`${url}&partial=true`)
     const html = await result.text()
+
+    // Update the trending list with the new HTML
     document.querySelector('.trending-list').innerHTML = html
+
+    // Highlight the selected filter button
     trendingForm.querySelectorAll('sl-button').forEach((btn) => {
       btn.setAttribute(
         'variant',
@@ -57,6 +69,8 @@ export const initSearchFilter = () => {
     try {
       e.preventDefault()
       const formData = new FormData(e.target)
+
+      // If the browser supports view transitions, use it
       if (document.startViewTransition) {
         document.startViewTransition(() => updateSearchResults(formData))
       } else {
@@ -74,11 +88,16 @@ export const initSearchFilter = () => {
  */
 const updateSearchResults = async (formData) => {
   try {
+    // Update the URL with the search query
     const params = new URLSearchParams({ q: formData.get('q') })
     const url = `?${params.toString()}`
     window.history?.pushState({}, '', url)
+
+    // Fetch the partial HTML of the search results based on the search query
     const result = await fetch(`${url}&partial=true`)
     const html = await result.text()
+
+    // Update the search results with the new HTML
     searchResults.innerHTML = html
   } catch (e) {
     console.error(e)

@@ -1,3 +1,5 @@
+'use strict'
+
 import { toast } from './toast'
 import { subscribePush } from './push'
 
